@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - BidCom Store</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+
+</head>
+<body class="gradient-bg">
+    <div class="center-box">
+        <h1>Iniciar Sesión</h1>
+        <form th:action="@{/login}" method="post">
+            <input type="text" name="username" placeholder="Usuario" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <button type="submit">Ingresar</button>
+        </form>
+
+        <!-- Mensajes de error o logout -->
+        <div th:if="${param.error}" class="msg-error">Usuario o contraseña inválidos</div>
+        <div th:if="${param.logout}" class="msg-logout">Sesión cerrada correctamente</div>
+    </div>
+</body>
+</html>

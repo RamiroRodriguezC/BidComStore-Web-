@@ -1,0 +1,7 @@
+com\bidcom\model\Cliente.class
+com\bidcom\model\Usuario.class
+com\bidcom\model\NewClass.class
+com\bidcom\controller\ClienteController.class
+com\bidcom\repository\ClienteRepository.class
+com\bidcom\SistemabidcomApplication.class
+Usuario\java.class

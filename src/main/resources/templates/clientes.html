@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis pedidos</title>
+    <link rel="stylesheet" th:href="@{/css/clientes.css}">
+</head>
+<body >
+    <h1 th:text="'Pedidos de ' + ${cliente.nombre} + ' ' + ${cliente.apellido}"></h1>
+
+    <div class="pedidos-container">
+    <div th:each="pedido : ${pedidos}" class="pedido-card">
+        <h2>Pedido #<span th:text="${pedido.pedidoID}"></span></h2>
+        <p><strong>Estado:</strong> <span th:text="${pedido.estado}"></span></p>
+        <p><strong>Fecha:</strong> <span th:text="${pedido.fechaHoraCreacion}"></span></p>
+        <div class="items">
+            <h3>Items:</h3>
+            <ul>
+                <li th:each="item : ${pedido.items}">
+                    <span th:text="${item.producto.nombre}"></span>
+                    <span th:text="${item.producto.modelo}"></span>
+                    $<span th:text="${item.precio}"></span>
+                    (x<span th:text="${item.cantidad}"></span>)
+                    
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

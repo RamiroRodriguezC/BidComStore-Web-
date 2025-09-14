@@ -1,0 +1,34 @@
+
+.index-page {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0d6efd, #6610f2);
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.center-box {
+  text-align: center;
+}
+
+.center-box h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: inline-block;
+  background: white;
+  color: #0d6efd;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #f1f1f1;
+}

@@ -1,0 +1,57 @@
+/* Fondo degradado (reutilizable) */
+.gradient-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    font-family: Arial, sans-serif;
+}
+
+/* Caja centrada */
+.center-box {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    color: white;
+    width: 300px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+/* Inputs */
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+}
+
+/* Botón */
+.login-form button {
+    width: 100%;
+    padding: 10px;
+    background: white;
+    color: #007bff;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.login-form button:hover {
+    background: #e6e6e6;
+}
+
+/* Mensajes */
+.msg-error {
+    margin-top: 10px;
+    color: #ff4d4d;
+}
+.msg-logout {
+    margin-top: 10px;
+    color: #4dff88;
+}
