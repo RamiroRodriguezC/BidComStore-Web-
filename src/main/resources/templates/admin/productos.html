@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      th:replace="admin/layout :: content">
+<body>
+<div>
+    <h2>Gestión de Productos</h2>
+    <ul>
+        <li th:each="producto : ${productos}"
+            th:text="${producto.nombre} + ' - ' + ${producto.precio}">
+        </li>
+    </ul>
+</div>
+</body>
+</html>

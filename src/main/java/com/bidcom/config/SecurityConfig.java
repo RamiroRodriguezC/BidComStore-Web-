@@ -47,7 +47,7 @@ public class SecurityConfig {
                     //se redirige al usuario segun su rol a la pagina correspondiente
                     
                     if (role.equals("ROLE_ADMINISTRADOR")) { //Hibernate le agrega el prefijo ROLE_
-                        response.sendRedirect("/admin");
+                        response.sendRedirect("/admin/usuarios");
                     } else if (role.equals("ROLE_REPRESENTANTE_VENTAS")) { //Hibernate le agrega el prefijo ROLE_
                         System.out.println("ROL = " + role);
                         response.sendRedirect("/representante");
