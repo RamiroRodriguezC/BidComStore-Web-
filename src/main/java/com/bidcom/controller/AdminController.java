@@ -27,15 +27,22 @@ public class AdminController {
     @Autowired
     private ProductoRepository productoRepository;
 
-    @GetMapping("/usuarios")
-    public String verUsuarios(Model model) {
-        model.addAttribute("usuarios", usuarioRepository.findAll());
-        return "admin/usuarios";
-    }
+@GetMapping("/usuarios")
+public String verUsuarios(Model model) {
+    model.addAttribute("usuarios", usuarioRepository.findAll());
+    return "admin/layout"; // Thymeleaf reemplazará el fragmento directamente
+}
+
+
 
     @GetMapping("/productos")
     public String verProductos(Model model) {
         model.addAttribute("productos", productoRepository.findAll());
         return "admin/productos";
+    }
+    
+    @GetMapping("/usuarios-test")
+    public String testUsuarios() {
+        return "admin/usuarios";
     }
 }

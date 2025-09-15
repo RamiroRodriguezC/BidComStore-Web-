@@ -4,23 +4,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin</title>
-</head>
 <body>
-    <header>
-        <h1>Panel de Administración</h1>
-    </header>
+<header>
+    <h1>Panel de Administración</h1>
+</header>
 
-    <main>
-        <div th:fragment="content">
-            <!-- Aquí Thymeleaf insertará el contenido dinámico -->
-        </div>
-    </main>
+<main>
+    <!-- Aquí Thymeleaf insertará el contenido -->
+    <!-- layout.html -->
+    <div th:replace="admin/usuarios :: usuariosContent"></div>
 
-    <footer>
-        <p>© 2025 BidCom</p>
-    </footer>
+</main>
+
+<footer>
+    <p>© 2025 BidCom</p>
+</footer>
 </body>
 </html>
+
