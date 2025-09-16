@@ -24,8 +24,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/cliente")
 public class ClienteController {
 
     private final UsuarioRepository usuarioRepository;
@@ -36,7 +38,7 @@ public class ClienteController {
         this.pedidoRepository = pedidoRepository;
     }
 
-    @GetMapping("/clientes")
+    @GetMapping("/mispedidos")
     public String verPedidosCliente(Model model) {
         // obtiene quien esta logueado (devolveria el mail)
         Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
@@ -51,7 +53,9 @@ public class ClienteController {
         //aca basicente le pasa las variables pedidos y clientes al html
         model.addAttribute("pedidos", pedidos);
         model.addAttribute("cliente", usuario.getCliente());
-        return "clientes"; // clientes.html en templates
+        model.addAttribute("fragment", "cliente/mispedidos");
+
+        return "layout"; // clientes.html en templates
     }
 }
 

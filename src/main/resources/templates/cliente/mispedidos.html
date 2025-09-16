@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Mis pedidos</title>
-    <link rel="stylesheet" th:href="@{/css/clientes.css}">
-</head>
-<body >
-    <h1 th:text="'Pedidos de ' + ${cliente.nombre} + ' ' + ${cliente.apellido}"></h1>
-
+<div th:fragment="content">
+    <h2>¡Fragmento cargado correctamente!</h2>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
     <div class="pedidos-container">
-    <div th:each="pedido : ${pedidos}" class="pedido-card">
+    <div th:each="pedido : ${pedidos}" class="pedido-cards">
         <h2>Pedido #<span th:text="${pedido.pedidoID}"></span></h2>
         <p><strong>Estado:</strong> <span th:text="${pedido.estado}"></span></p>
         <p><strong>Fecha:</strong> <span th:text="${pedido.fechaHoraCreacion}"></span></p>
@@ -31,5 +20,5 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         </div>
     </div>
 </div>
-</body>
-</html>
+    
+<!-- <h1 th:text="'Pedidos de ' + ${cliente.nombre} + ' ' + ${cliente.apellido}"></h1> -->

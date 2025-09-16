@@ -53,7 +53,7 @@ public class SecurityConfig {
                         response.sendRedirect("/representante");
                     } else {
                         System.out.println(role.toString());
-                        response.sendRedirect("/clientes");
+                        response.sendRedirect("/cliente/mispedidos");
                     }
                 })
                 .permitAll()

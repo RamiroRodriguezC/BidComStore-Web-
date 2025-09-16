@@ -30,19 +30,16 @@ public class AdminController {
 @GetMapping("/usuarios")
 public String verUsuarios(Model model) {
     model.addAttribute("usuarios", usuarioRepository.findAll());
-    return "admin/layout"; // Thymeleaf reemplazará el fragmento directamente
+    model.addAttribute("fragment", "admin/usuarios");
+    return "layout"; // Thymeleaf reemplazará el fragmento directamente
 }
 
-
-
-    @GetMapping("/productos")
-    public String verProductos(Model model) {
-        model.addAttribute("productos", productoRepository.findAll());
-        return "admin/productos";
-    }
+@GetMapping("/productos")
+public String verProductos(Model model) {
+    model.addAttribute("productos", productoRepository.findAll());
+    model.addAttribute("fragment", "admin/productos");
+    return "layout";
+}
     
-    @GetMapping("/usuarios-test")
-    public String testUsuarios() {
-        return "admin/usuarios";
-    }
+
 }

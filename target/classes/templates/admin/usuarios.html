@@ -1,7 +1,14 @@
 <!-- src/main/resources/templates/admin/usuarios.html -->
-<div xmlns:th="http://www.thymeleaf.org" th:fragment="usuariosContent">
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="content">
     <h2>¡Fragmento cargado correctamente!</h2>
-    <p>Si ves esto en la página, el fragmento funciona.</p>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <div class="pedidos-container">
+    <div th:each="usuario : ${usuarios}" class="pedido-cards">
+        <h2>Usuario #<span th:text="${usuario.userID}"></span></h2>
+        <p><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
+        <p><strong>Rol:</strong> <span th:text="${usuario.rol}"></span></p>
+        </div>
+    </div>
 </div>
 
 <!-- <div xmlns:th="http://www.thymeleaf.org" th:fragment="usuariosContent">

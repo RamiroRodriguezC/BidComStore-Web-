@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Panel de Gestión</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+    <header>
+        <h1>Panel de Gestión</h1>
+        <nav>
+            <!-- Menú dinámico según el rol -->
+            <ul>
+                <li th:if="${#authorization.expression('hasRole(''ADMINISTRADOR'')')}">
+                    <a th:href="@{/admin/usuarios}">Usuarios</a>
+                </li>
+                <li th:if="${#authorization.expression('hasRole(''ADMINISTRADOR'')')}">
+                    <a th:href="@{/admin/productos}">Productos</a>
+                </li>
+                <li th:if="${#authorization.expression('hasRole(''REPRESENTANTE_VENTAS'')')}">
+                    <a th:href="@{/representante/clientes}">Clientes</a>
+                </li>
+                <li th:if="${#authorization.expression('hasRole(''REPRESENTANTE_VENTAS'')')}">
+                    <a th:href="@{/representante/pedidos}">Pedidos</a>
+                </li>
+                <li th:if="${#authorization.expression('hasRole(''CLIENTE'')')}">
+                    <a th:href="@{/cliente/mispedidos}">Mis pedidos</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div th:replace="~{${fragment} :: content}"></div>
+    </main>
+
+
+    <footer>
+        <p>© 2025 BidCom</p>
+    </footer>
+</body>
+</html>
+
