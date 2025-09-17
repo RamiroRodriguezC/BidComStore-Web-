@@ -4,6 +4,7 @@
  */
 package com.bidcom.controller;
 
+import com.bidcom.model.rolUsuario;
 import com.bidcom.repositories.PedidoRepository;
 import com.bidcom.repositories.ProductoRepository;
 import com.bidcom.repositories.UsuarioRepository;
@@ -29,7 +30,7 @@ public class RepresentanteController {
 
     @GetMapping("/clientes")
     public String verUsuarios(Model model) {
-        model.addAttribute("clientes", usuarioRepository.findAll());
+        model.addAttribute("clientes", usuarioRepository.findByRol(rolUsuario.CLIENTE));
         model.addAttribute("fragment", "representante/clientes");
         return "layout"; // Thymeleaf reemplazará el fragmento directamente
     }

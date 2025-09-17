@@ -10,6 +10,8 @@ package com.bidcom.repositories;
  */
 
 import com.bidcom.model.Usuario;
+import com.bidcom.model.rolUsuario;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -19,5 +21,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     //optional devuelve Optional.empty() si no encuentra coincidencia, 
     //evita nullPointerExeption
     Optional<Usuario> findByEmail(String email);
+    
+    List<Usuario> findByRol(rolUsuario rol);
 }
 
