@@ -67,6 +67,7 @@ public class CreateController {
     @GetMapping("/admin/usuarios/nuevo")
     public String mostrarFormularioCrearUsuario(Model model) {
         model.addAttribute("usuario", new Usuario());
+        model.addAttribute("forzarCliente", false);
         model.addAttribute("formFragment", "create/form-usuario");
         return "create";
 
@@ -74,6 +75,11 @@ public class CreateController {
 
     @PostMapping("/admin/usuarios/guardar")
     public String guardarUsuario(@RequestParam("rol") String rol,
+            /*
+            
+                ¿Puede mejorarse? ¿hacen falta todos los parametros por separado?
+            
+            */
             @RequestParam("email") String email,
             @RequestParam("password") String password,
             @RequestParam(name = "nombre", required = false) String nombre,
@@ -99,5 +105,21 @@ public class CreateController {
         }
 
         return "redirect:/admin/usuarios";
+    }
+    
+    @GetMapping("/representante/clientes/nuevo")
+    public String mostrarFormularioCrearClienteParaRepresentante(Model model) {
+        Cliente cliente = new Cliente();
+        cliente.setRol(rolUsuario.CLIENTE); // Establece el rol como "CLIENTE" por defecto
+        model.addAttribute("usuario", cliente);
+        model.addAttribute("forzarCliente", true);
+        model.addAttribute("formFragment", "create/form-usuario");
+        return "create";
+    }
+    
+    @PostMapping("/representante/clientes/guardar")
+    public String guardarCliente(@ModelAttribute Cliente cliente){
+        clienteService.guardar(cliente);
+        return "redirect:/representante/clientes";
     }
 }

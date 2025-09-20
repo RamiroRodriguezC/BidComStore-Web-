@@ -1,15 +1,18 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/javascript.js to edit this template
- */
+document.addEventListener('DOMContentLoaded', function () {
+    const rolSelect = document.getElementById('rol');
+    const clienteFieldsDiv = document.getElementById('cliente-fields');
 
-document.getElementById('rol').addEventListener('change', function() {
-        const clienteFieldsDiv = document.getElementById('cliente-fields');
-        if (this.value === 'CLIENTE') {
-            clienteFieldsDiv.style.display = 'block';
-        } else {
-            clienteFieldsDiv.style.display = 'none';
+    // Verifica si el select de roles existe (solo para el admin)
+    if (rolSelect) {
+        function toggleClienteFields() {
+            if (rolSelect.value === 'CLIENTE') {
+                clienteFieldsDiv.style.display = 'block';
+            } else {
+                clienteFieldsDiv.style.display = 'none';
+            }
         }
-    });
-
+        toggleClienteFields();
+        rolSelect.addEventListener('change', toggleClienteFields);
+    }
+});
 

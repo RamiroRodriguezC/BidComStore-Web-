@@ -1,8 +1,6 @@
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<form th:action="@{/admin/usuarios/guardar}" th:object="${usuario}" method="post">
+<!-- Segun si es admin o representante me manda a una u otra ruta luego de pulsar el boton-->
+<form th:action="${forzarCliente} ? @{/representante/clientes/guardar} : @{/admin/usuarios/guardar}"
+      th:object="${usuario}" method="post">
     <div>
         <label for="email">Email:</label>
         <input type="email" id="email" th:field="*{email}" required/>
@@ -15,14 +13,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
     <div>
         <label for="rol">Rol:</label>
-        <select id="rol" th:field="*{rol}">
+        <select th:unless="${forzarCliente}" id="rol" th:field="*{rol}">
             <option th:each="rolEnum : ${T(com.bidcom.model.rolUsuario).values()}"
                     th:value="${rolEnum.name()}"
                     th:text="${rolEnum.name()}"
                     th:selected="${rolEnum.name() == usuario.rol?.name()}"></option>
         </select>
+    
+        <div th:if="${forzarCliente}">
+            <span th:text="${usuario.getRol()}"></span>
+            <input type="hidden" name="rol" th:field="*{rol}" />
+        </div>
     </div>
-
+<!-- campos cliente -->
     <div id="cliente-fields" style="display: none;">
         <div>
             <label for="nombre">Nombre:</label>
@@ -40,4 +43,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     
     <button type="submit">Crear</button>
 </form>
+   <!-- Script javaScript para mostrar de forma dinamica los campos de cliente
+   si cliente es seleccionado como rol -->
    <script th:src="@{/js/formUsuario.js}"></script>
