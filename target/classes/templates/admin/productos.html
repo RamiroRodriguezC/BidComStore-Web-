@@ -12,6 +12,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <p><strong>Nombre:</strong> <span th:text="${producto.nombre}"></span></p>
         <p><strong>Modelo:</strong> <span th:text="${producto.modelo}"></span></p>
         <p><strong>Descripcion:</strong> <span th:text="${producto.descripcion}"></span></p>
+        
+        <a th:href="@{'/admin/productos/edit/' + ${producto.codigoProducto}}" 
+               class="btn-editar">Editar</a>
         </div>
     </div>
 </div>

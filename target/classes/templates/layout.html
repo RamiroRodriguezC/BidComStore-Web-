@@ -11,6 +11,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 <body>
     <header>
         <h1>Panel de Gestión</h1>
+        
+            <!-- Botón Crear (solo aparece si se pasa la variable crearUrl) -->
+            <th:block th:if="${crearUrl != null}">
+                <a th:href="${crearUrl}" class="btn-crear">+ Crear</a>
+            </th:block>
         <nav>
             <!-- Menú dinámico según el rol -->
             <ul>

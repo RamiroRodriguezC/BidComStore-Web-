@@ -22,6 +22,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     //evita nullPointerExeption
     Optional<Usuario> findByEmail(String email);
     
+    Optional<Usuario> findByUserid(Long userid);
+    
     List<Usuario> findByRol(rolUsuario rol);
 }
 

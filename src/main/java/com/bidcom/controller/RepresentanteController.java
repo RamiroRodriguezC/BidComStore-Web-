@@ -32,6 +32,7 @@ public class RepresentanteController {
     public String verUsuarios(Model model) {
         model.addAttribute("clientes", usuarioRepository.findByRol(rolUsuario.CLIENTE));
         model.addAttribute("fragment", "representante/clientes");
+        model.addAttribute("crearUrl", "/representante/clientes/nuevo");
         return "layout"; // Thymeleaf reemplazará el fragmento directamente
     }
     
@@ -39,6 +40,7 @@ public class RepresentanteController {
     public String verPedidos(Model model) {
         model.addAttribute("pedidos", pedidoRepository.findAll());
         model.addAttribute("fragment", "representante/pedidos");
+        model.addAttribute("crearUrl", "/representante/pedidos/nuevo");
         return "layout"; // Thymeleaf reemplazará el fragmento directamente
     }
 }

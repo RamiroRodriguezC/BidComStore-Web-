@@ -26,6 +26,7 @@ public class Producto {
 
     // Getters y Setters
     public Long getCodigoProducto() { return codigoProducto; }
+    public void setCodigoProducto(Long codigoProducto) { this.codigoProducto = codigoProducto; }
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
     public String getModelo() { return modelo; }

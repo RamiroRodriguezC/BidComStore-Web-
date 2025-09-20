@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crear</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+<header>
+    <h1>Crear nuevo registro</h1>
+</header>
+
+<main>
+    <!-- Aquí se inyecta el formulario específico -->
+    <div th:replace="~{${formFragment}}"></div>
+</main>
+<footer>
+    <p>© 2025 BidCom</p>
+</footer>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.bidcom.service;
 
+import com.bidcom.model.Producto;
 import com.bidcom.model.Usuario;
 import com.bidcom.repositories.UsuarioRepository;
 import org.springframework.security.core.userdetails.User;
@@ -26,6 +27,22 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository;
     }
 
+    // Crear o actualizar (Spring maneja ambos con save)
+    public Usuario guardar(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+
+    // Editar: se hace recuperando primero el objeto
+    public Usuario editar(Long id, Usuario usuarioActualizado) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        usuario.setEmail(usuarioActualizado.getEmail());
+        usuario.setRol(usuarioActualizado.getRol());
+        usuario.setPassword(usuarioActualizado.getPassword());
+
+        return usuarioRepository.save(usuario);
+    }
     /*public Optional<Usuario> buscarPorUsername(String email) {
         return repository.findByEmail(email);
     }
@@ -47,6 +64,10 @@ public class UsuarioService implements UserDetailsService {
                 .password(usuario.getPassword())             // hash de la BD
                 .roles(usuario.getRol().toString())      // CLIENTE, ADMIN, REPRESENTANTE
                 .build();
+    }
+    
+    public Optional<Usuario> buscarPorID(Long userID) {
+        return usuarioRepository.findByUserid(userID);
     }
 
 }

@@ -31,6 +31,7 @@ public class AdminController {
 public String verUsuarios(Model model) {
     model.addAttribute("usuarios", usuarioRepository.findAll());
     model.addAttribute("fragment", "admin/usuarios");
+    model.addAttribute("crearUrl", "/admin/usuarios/nuevo");
     return "layout"; // Thymeleaf reemplazará el fragmento directamente
 }
 
@@ -38,6 +39,7 @@ public String verUsuarios(Model model) {
 public String verProductos(Model model) {
     model.addAttribute("productos", productoRepository.findAll());
     model.addAttribute("fragment", "admin/productos");
+    model.addAttribute("crearUrl", "/admin/productos/nuevo");
     return "layout";
 }
     
