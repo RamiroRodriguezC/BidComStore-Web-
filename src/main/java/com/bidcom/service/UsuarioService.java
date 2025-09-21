@@ -66,8 +66,8 @@ public class UsuarioService implements UserDetailsService {
                 .build();
     }
     
-    public Optional<Usuario> buscarPorID(Long userID) {
-        return usuarioRepository.findByUserid(userID);
+    public Optional<Usuario> buscarPorID(Long userid) {
+        return usuarioRepository.findByUserid(userid);
     }
 
 }

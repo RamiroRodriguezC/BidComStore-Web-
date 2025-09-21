@@ -30,7 +30,9 @@ public class Usuario implements UserDetails {
     private rolUsuario rol;
 
     // Getters y Setters
-    public Long getUserID() { return userid; }
+    public Long getUserid() { return userid; }
+    public Long getUserID() { return getUserid();};
+    public void setUserid(Long userid) {this.userid = userid;}
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
     public String getPassword() { return password; }

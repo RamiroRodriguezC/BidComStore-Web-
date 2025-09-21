@@ -1,15 +1,39 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<form th:action="${calledByRepresentante} ? @{/representante/clientes/actualizar} : @{/admin/usuarios/actualizar}" th:object="${usuario}" method="post">
+    <input type="hidden" th:field="*{userid}" />
+
+
+
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" required/>
+    </div>
+
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" />
+        <small>Dejar vacío para no cambiar la contraseña.</small>
+    </div>
+
+    <div>
+        <label>Rol:</label>
+        <p th:text="${usuario.rol}"></p>
+        <input type="hidden" th:field="*{rol}" />
+    </div>
+
+    <div th:if="${usuario.rol.toString() == 'CLIENTE'}">
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" />
+        </div>
+        <div>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" th:field="*{apellido}" />
+        </div>
+        <div>
+            <label for="numeroTelefonico">Teléfono:</label>
+            <input type="text" id="numeroTelefonico" th:field="*{numeroTelefonico}" />
+        </div>
+    </div>
+
+    <button type="submit">Actualizar</button>
+</form>

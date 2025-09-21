@@ -12,6 +12,7 @@ import com.bidcom.service.ClienteService;
 import com.bidcom.service.PedidoService;
 import com.bidcom.service.ProductoService;
 import com.bidcom.service.UsuarioService;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -74,6 +75,7 @@ public class CreateController {
     }
 
     @PostMapping("/admin/usuarios/guardar")
+    @Transactional
     public String guardarUsuario(@RequestParam("rol") String rol,
             /*
             

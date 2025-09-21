@@ -7,6 +7,9 @@
         <p><strong>Nombre:</strong> <span th:text="${cliente.nombre}"></span></p>
         <p><strong>Apellido:</strong> <span th:text="${cliente.apellido}"></span></p>
         <p><strong>Telefono:</strong> <span th:text="${cliente.numeroTelefonico}"></span></p>
+        
+        <a th:href="@{'/representante/cliente/edit/' + ${cliente.userID}}" 
+               class="btn-editar">Editar</a>
         </div>
     </div>
 </div>
