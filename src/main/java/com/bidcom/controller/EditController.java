@@ -45,7 +45,7 @@ public class EditController {
     // Mostrar formulario de edición
     @GetMapping("admin/productos/edit/{codigoProducto}")
     public String editarProducto(@PathVariable Long codigoProducto, Model model) {
-        Producto producto = productoService.buscarPorCodigo(codigoProducto)
+        Producto producto = productoService.buscarPorLlavePrimaria(codigoProducto)
                 .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado: " + codigoProducto));
         model.addAttribute("producto", producto);
         model.addAttribute("formFragment", "edit/edit-producto");
@@ -62,7 +62,7 @@ public class EditController {
     
     @GetMapping({"/admin/usuarios/edit/{userid}", "/representante/cliente/edit/{userid}"})
     public String editarUsuario(@PathVariable Long userid, Model model, HttpServletRequest request) {
-        Usuario usuario = usuarioService.buscarPorID(userid)
+        Usuario usuario = usuarioService.buscarPorLlavePrimaria(userid)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + userid));
 
         // Detectamos si la URL contiene "/representante/" para definir calledByRepresentante
@@ -88,7 +88,7 @@ public class EditController {
 
 @Transactional
 private String actualizarUsuario(Usuario usuarioForm, boolean calledByRepresentante) {
-    Usuario usuarioOriginal = usuarioService.buscarPorID(usuarioForm.getUserid())
+    Usuario usuarioOriginal = usuarioService.buscarPorLlavePrimaria(usuarioForm.getUserid())
             .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + usuarioForm.getUserid()));
     
     //actualiza el campo mail

@@ -2,7 +2,9 @@ package com.bidcom.service;
 
 import com.bidcom.model.Producto;
 import com.bidcom.model.Usuario;
+import com.bidcom.model.rolUsuario;
 import com.bidcom.repositories.UsuarioRepository;
+import java.util.List;
 import org.springframework.security.core.userdetails.User;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 
-public class UsuarioService implements UserDetailsService {
+public class UsuarioService extends BaseService<Usuario, UsuarioRepository> implements UserDetailsService  {
     private final UsuarioRepository usuarioRepository;
 
     public UsuarioService(UsuarioRepository usuarioRepository) {
+        super(usuarioRepository);
         this.usuarioRepository = usuarioRepository;
     }
     
@@ -27,11 +30,14 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository;
     }
 
-    // Crear o actualizar (Spring maneja ambos con save)
-    public Usuario guardar(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+    public Optional<Usuario> buscarPorMail(String mail) {
+        return usuarioRepository.findByEmail(mail);
     }
-
+    
+    public List<Usuario> buscarPorRol(rolUsuario rol) {
+        return usuarioRepository.findByRol(rol);
+    }
+    
     // Editar: se hace recuperando primero el objeto
     public Usuario editar(Long id, Usuario usuarioActualizado) {
         Usuario usuario = usuarioRepository.findById(id)
@@ -43,31 +49,28 @@ public class UsuarioService implements UserDetailsService {
 
         return usuarioRepository.save(usuario);
     }
-    /*public Optional<Usuario> buscarPorUsername(String email) {
-        return repository.findByEmail(email);
-    }
-
-    public boolean validarLogin(String email, String password) {
-        return repository.findByEmail(email)
-                .map(user -> user.getPassword().equals(password))
-                .orElse(false);
-    }*/
-
+    
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("========= BUSCANDO POR EMAIL ========= \n " + email );
-         Usuario usuario = usuarioRepository.findByEmail(email)
+        System.out.println("========= BUSCANDO POR EMAIL ========= \n " + email);
+        Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
         return User.builder()
-                .username(usuario.getEmail())     // lo que el usuario escribe en login
-                .password(usuario.getPassword())             // hash de la BD
-                .roles(usuario.getRol().toString())      // CLIENTE, ADMIN, REPRESENTANTE
+                .username(usuario.getEmail()) // lo que el usuario escribe en login
+                .password(usuario.getPassword()) // hash de la BD
+                .roles(usuario.getRol().toString()) // CLIENTE, ADMIN, REPRESENTANTE
                 .build();
     }
-    
-    public Optional<Usuario> buscarPorID(Long userid) {
+
+    @Override
+    public Optional<Usuario> buscarPorLlavePrimaria(Long userid) {
         return usuarioRepository.findByUserid(userid);
     }
+
+    public List<Usuario> buscarTodos() {
+        return usuarioRepository.findByActivoTrue();
+    }
+    // Crear o actualizar (Spring maneja ambos con save)
 
 }

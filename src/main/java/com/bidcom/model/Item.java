@@ -30,7 +30,7 @@ public class Item {
     private Integer cantidad;
 
     private Double precio; // Precio en el momento del pedido
-
+    
     // Getters y Setters
     public Long getItemID() { return itemID; }
     public Pedido getPedido() { return pedido; }

@@ -7,6 +7,8 @@ package com.bidcom.controller;
 import com.bidcom.model.Usuario;
 import com.bidcom.repositories.ProductoRepository;
 import com.bidcom.repositories.UsuarioRepository;
+import com.bidcom.service.ProductoService;
+import com.bidcom.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,14 +24,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
 
     @Autowired
-    private ProductoRepository productoRepository;
+    private ProductoService productoService;
 
 @GetMapping("/usuarios")
 public String verUsuarios(Model model) {
-    model.addAttribute("usuarios", usuarioRepository.findAll());
+    model.addAttribute("usuarios", usuarioService.buscarTodos());
     model.addAttribute("fragment", "admin/usuarios");
     model.addAttribute("crearUrl", "/admin/usuarios/nuevo");
     return "layout"; // Thymeleaf reemplazará el fragmento directamente
@@ -37,7 +39,7 @@ public String verUsuarios(Model model) {
 
 @GetMapping("/productos")
 public String verProductos(Model model) {
-    model.addAttribute("productos", productoRepository.findAll());
+    model.addAttribute("productos", productoService.buscarTodos());
     model.addAttribute("fragment", "admin/productos");
     model.addAttribute("crearUrl", "/admin/productos/nuevo");
     return "layout";

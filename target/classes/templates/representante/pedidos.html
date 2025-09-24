@@ -2,21 +2,25 @@
     <h2>¡Fragmento cargado correctamente!</h2>
     <link rel="stylesheet" th:href="@{/css/global.css}">
     <div class="pedidos-container">
-    <div th:each="pedido : ${pedidos}" class="pedido-cards">
-        <h2>Pedido #<span th:text="${pedido.pedidoID}"></span></h2>
-        <p><strong>Estado:</strong> <span th:text="${pedido.estado}"></span></p>
-        <p><strong>Fecha:</strong> <span th:text="${pedido.fechaHoraCreacion}"></span></p>
-        <div class="items">
-            <h3>Items:</h3>
-            <ul>
-                <li th:each="item : ${pedido.items}">
-                    <span th:text="${item.producto.nombre}"></span>
-                    <span th:text="${item.producto.modelo}"></span>
-                    $<span th:text="${item.precio}"></span>
-                    (x<span th:text="${item.cantidad}"></span>)
-                    
-                </li>
-            </ul>
+        <div th:each="pedido : ${pedidos}" class="pedido-cards">
+            <h2>Pedido #<span th:text="${pedido.pedidoID}"></span></h2>
+            <p><strong>Estado:</strong> <span th:text="${pedido.estado}"></span></p>
+            <p><strong>Fecha:</strong> <span th:text="${pedido.fechaHoraCreacion}"></span></p>
+            <div class="items">
+                <h3>Items:</h3>
+                <ul>
+                    <li th:each="item : ${pedido.items}">
+                        <span th:text="${item.producto.nombre}"></span>
+                        <span th:text="${item.producto.modelo}"></span>
+                        $<span th:text="${item.precio}"></span>
+                        (x<span th:text="${item.cantidad}"></span>)
+
+                    </li>
+                </ul>
+            </div>
+            <form th:action="@{/representante/pedidos/eliminar/{pedidoID}(pedidoID=${pedido.pedidoID})}" th:method="post" style="display:inline;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit">Eliminar</button>
+            </form>
         </div>
     </div>
-</div>

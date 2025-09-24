@@ -5,6 +5,8 @@
 package com.bidcom.controller;
 
 import com.bidcom.model.Cliente;
+import com.bidcom.model.Item;
+import com.bidcom.model.Pedido;
 import com.bidcom.model.Producto;
 import com.bidcom.model.Usuario;
 import com.bidcom.model.rolUsuario;
@@ -13,13 +15,14 @@ import com.bidcom.service.PedidoService;
 import com.bidcom.service.ProductoService;
 import com.bidcom.service.UsuarioService;
 import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -108,7 +111,7 @@ public class CreateController {
 
         return "redirect:/admin/usuarios";
     }
-    
+
     @GetMapping("/representante/clientes/nuevo")
     public String mostrarFormularioCrearClienteParaRepresentante(Model model) {
         Cliente cliente = new Cliente();
@@ -118,10 +121,50 @@ public class CreateController {
         model.addAttribute("formFragment", "create/form-usuario");
         return "create";
     }
-    
+
     @PostMapping("/representante/clientes/guardar")
-    public String guardarCliente(@ModelAttribute Cliente cliente){
+    public String guardarCliente(@ModelAttribute Cliente cliente) {
         clienteService.guardar(cliente);
         return "redirect:/representante/clientes";
+    }
+
+    @GetMapping("representante/pedidos/nuevo")
+    public String mostrarFormularioCrearPedido(Model model) {
+        Pedido pedido = new Pedido();
+        // Inicializa la lista de items para evitar NullPointerException en el formulario
+        pedido.setItems(List.of(new Item()));
+        model.addAttribute("pedido", pedido);
+        model.addAttribute("clientes", clienteService.buscarTodos());
+        model.addAttribute("productos", productoService.buscarTodos());
+        model.addAttribute("formFragment", "create/form-pedido");
+        return "create";
+    }
+    
+    @PostMapping("representante/pedidos/guardar")
+    @Transactional
+    public String guardarPedido(@ModelAttribute Pedido pedido) {
+        // Establece la fecha y hora de creación
+        pedido.setFechaHoraCreacion(LocalDateTime.now());
+        // Establece el estado inicial
+        pedido.setEstado("PENDIENTE");
+
+        // Recorre cada ítem para establecer la referencia al pedido
+        for (Item item : pedido.getItems()) {
+            item.setPedido(pedido);
+
+            // ➡️ Paso 1: Obtén el ID del producto que viene del formulario
+            Long codigoProducto = item.getProducto().getCodigoProducto();
+
+            // ➡️ Paso 2: Busca el producto completo en la base de datos usando el ID
+            Producto productoCompleto = productoService.buscarPorLlavePrimaria(codigoProducto)
+                    .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado: " + codigoProducto));
+
+            // ➡️ Paso 3: Asigna el producto completo y su precio al ítem
+            item.setProducto(productoCompleto);
+            item.setPrecio(productoCompleto.getPrecio());
+        }
+
+        pedidoService.guardar(pedido);
+        return "redirect:/representante/pedidos";
     }
 }

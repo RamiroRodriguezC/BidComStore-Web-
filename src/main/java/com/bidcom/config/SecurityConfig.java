@@ -3,6 +3,7 @@ package com.bidcom.config;
 import com.bidcom.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,9 +29,9 @@ public class SecurityConfig {
 
                 //Definir los endpoints publicos
                 .requestMatchers("/", "/index", "/login").permitAll()
-                .requestMatchers("/clientes/**").hasRole("CLIENTE")
-                .requestMatchers("/representante/**").hasRole("REPRESENTANTE_VENTAS")
-                .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
+                .requestMatchers(HttpMethod.POST, "/clientes/**").hasRole("CLIENTE")
+                .requestMatchers(HttpMethod.POST, "/representante/**").hasRole("REPRESENTANTE_VENTAS")
+                .requestMatchers(HttpMethod.POST,"/admin/**").hasRole("ADMINISTRADOR")
                 // el /** significa que pueden entrar a todas las subrutas de x/**
                 // osea, si tengo admin/** puedo entrar a admin/a y admin/b por igual
                 .anyRequest().authenticated()

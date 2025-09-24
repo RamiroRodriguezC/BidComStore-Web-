@@ -7,6 +7,7 @@ package com.bidcom.service;
 import com.bidcom.model.Cliente;
 import com.bidcom.repositories.ClienteRepository;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,5 +27,10 @@ public class ClienteService {
                    //o todo se realiza con exito o no se realiza nada.
     public void guardar(Cliente cliente) {
         clienteRepository.save(cliente);
+    }
+    
+    
+    public List<Cliente> buscarTodos() {
+        return clienteRepository.findByActivoTrue();
     }
 }

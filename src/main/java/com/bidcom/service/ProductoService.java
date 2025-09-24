@@ -4,9 +4,11 @@
  */
 package com.bidcom.service;
 
+import com.bidcom.model.Cliente;
 import com.bidcom.model.Producto;
 import com.bidcom.model.Usuario;
 import com.bidcom.repositories.ProductoRepository;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
@@ -16,22 +18,25 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class ProductoService {
+public class ProductoService extends BaseService<Producto, ProductoRepository> {
     private final ProductoRepository productoRepository;
 
     public ProductoService(ProductoRepository productoRepository) {
+        // Llama al constructor de BaseService, pasando el repositorio.
+        super(productoRepository);
         this.productoRepository = productoRepository;
     }
-    
+
     public ProductoRepository getRepository() {
         return productoRepository;
     }
-    
-    public Producto guardar(Producto producto) {
-        return productoRepository.save(producto);
-    }
-    
-    public Optional<Producto> buscarPorCodigo(Long codigoProducto) {
+
+    @Override
+    public Optional<Producto> buscarPorLlavePrimaria(Long codigoProducto) {
         return productoRepository.findByCodigoProducto(codigoProducto);
+    }
+
+    public List<Producto> buscarTodos() {
+        return productoRepository.findByActivoTrue();
     }
 }

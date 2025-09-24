@@ -16,6 +16,8 @@ import com.bidcom.model.Usuario;
 import com.bidcom.repositories.ClienteRepository;
 import com.bidcom.repositories.PedidoRepository;
 import com.bidcom.repositories.UsuarioRepository;
+import com.bidcom.service.PedidoService;
+import com.bidcom.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,12 +32,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/cliente")
 public class ClienteController {
 
-    private final UsuarioRepository usuarioRepository;
-    private final PedidoRepository pedidoRepository;
+    private final UsuarioService usuarioService;
+    private final PedidoService pedidoService;
 
-    public ClienteController(UsuarioRepository usuarioRepository, PedidoRepository pedidoRepository) {
-        this.usuarioRepository = usuarioRepository;
-        this.pedidoRepository = pedidoRepository;
+    public ClienteController(UsuarioService usuarioService, PedidoService pedidoService) {
+        this.usuarioService = usuarioService;
+        this.pedidoService = pedidoService;
     }
 
     @GetMapping("/mispedidos")
@@ -44,11 +46,11 @@ public class ClienteController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
         String email = auth.getName();
         // lo busca en la base de datos
-        Usuario usuario = usuarioRepository.findByEmail(email)
+        Usuario usuario = usuarioService.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         // traer pedidos solo de este cliente
-        List<Pedido> pedidos = pedidoRepository.findByCliente(usuario);
+        List<Pedido> pedidos = pedidoService.findByCliente(usuario);
         
         //aca basicente le pasa las variables pedidos y clientes al html
         model.addAttribute("pedidos", pedidos);

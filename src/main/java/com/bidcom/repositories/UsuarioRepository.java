@@ -17,7 +17,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Long>  {
     //optional devuelve Optional.empty() si no encuentra coincidencia, 
     //evita nullPointerExeption
     Optional<Usuario> findByEmail(String email);
@@ -25,5 +25,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByUserid(Long userid);
     
     List<Usuario> findByRol(rolUsuario rol);
+    
+    List<Usuario> findByActivoTrue();
 }
 

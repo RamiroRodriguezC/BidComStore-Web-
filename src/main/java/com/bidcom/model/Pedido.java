@@ -15,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "pedidos")
-public class Pedido {
+public class Pedido implements Desactivable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +32,8 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<Item> items;
 
+    @Column(name = "activo")
+    private boolean activo = true;
     // Getters y Setters
     public Long getPedidoID() { return pedidoID; }
     public Cliente getCliente() { return cliente; }
@@ -42,5 +44,15 @@ public class Pedido {
     public void setEstado(String estado) { this.estado = estado; }
     public List<Item> getItems() { return items; }
     public void setItems(List<Item> items) { this.items = items; }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+    
+    
 }
 

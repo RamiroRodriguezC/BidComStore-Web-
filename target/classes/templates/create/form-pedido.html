@@ -1,15 +1,36 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<div th:fragment="form-pedido">
+    <form th:action="@{/representante/pedidos/guardar}" th:object="${pedido}" method="post">
+        <h2>Crear Pedido</h2>
+
+        <label for="cliente">Cliente:</label>
+        <select id="cliente" th:field="*{cliente.userid}">
+            <option th:each="cliente : ${clientes}"
+                    th:value="${cliente.userid}"
+                    th:text="${cliente.nombre + ' ' + cliente.apellido + ' (' + cliente.email + ')'}">
+            </option>
+        </select>
+
+        <h3>Ítems del Pedido</h3>
+        <div id="items-container">
+            <div class="item-form" th:each="item, stat : *{items}">
+                <h4>Ítem <span th:text="${stat.count}">1</span></h4>
+                <div class="form-group">
+                    <label>Producto:</label>
+                    <select th:field="*{items[__${stat.index}__].producto.codigoProducto}">
+                        <option th:each="producto : ${productos}"
+                                th:value="${producto.codigoProducto}"
+                                th:text="${producto.nombre}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Cantidad:</label>
+                    <input type="number" th:field="*{items[__${stat.index}__].cantidad}" required min="1">
+                </div>
+            </div>
+        </div>
+
+        <button type="button" id="add-item">Agregar otro ítem</button>
+        <button type="submit">Guardar Pedido</button>
+    </form>
+    <script th:src="@{/js/formPedido.js}"></script>
+</div>

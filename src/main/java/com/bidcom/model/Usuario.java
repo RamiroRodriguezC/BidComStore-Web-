@@ -4,7 +4,6 @@ package com.bidcom.model;
  *
  * @author Ramiro
  */
-
 import jakarta.persistence.*;
 import java.util.Collection;
 import java.util.List;
@@ -15,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "usuarios")
-public class Usuario implements UserDetails {
+public class Usuario implements UserDetails,Desactivable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,16 +28,56 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private rolUsuario rol;
 
+    @Column(name = "activo")
+    private boolean activo = true;
+
     // Getters y Setters
-    public Long getUserid() { return userid; }
-    public Long getUserID() { return getUserid();};
-    public void setUserid(Long userid) {this.userid = userid;}
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-    public rolUsuario getRol() { return this.rol; }
-    public void setRol(rolUsuario rol) { this.rol = rol; }
+    public Long getUserid() {
+        return userid;
+    }
+
+    public Long getUserID() {
+        return getUserid();
+    }
+
+    ;
+    public void setUserid(Long userid) {
+        this.userid = userid;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public rolUsuario getRol() {
+        return this.rol;
+    }
+
+    public void setRol(rolUsuario rol) {
+        this.rol = rol;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+    
+    
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -48,7 +87,7 @@ public class Usuario implements UserDetails {
            Spring Security usa esta colección para decidir si el usuario tiene permiso
            para acceder a un endpoint protegido (por ejemplo, /admin/** requiere ROLE_ADMINISTRADOR)
            Se agrega "ROLE_" al nombre del rol porque hasRole("X") internamente busca "ROLE_X" 
-        */
+         */
     }
 
     @Override
@@ -75,13 +114,13 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return UserDetails.super.isEnabled(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
-    
+
     /**
-     * Devuelve el cliente asociado si el usuario es un Cliente.
-     * Retorna null si no es un Cliente (por ejemplo Administrador o Representante).
+     * Devuelve el cliente asociado si el usuario es un Cliente. Retorna null si
+     * no es un Cliente (por ejemplo Administrador o Representante).
      */
     public Cliente getCliente() {
-        if (this instanceof Cliente ) { //instanceof devuelve True si This (el usuario) es del tipo cliente
+        if (this instanceof Cliente) { //instanceof devuelve True si This (el usuario) es del tipo cliente
             return (Cliente) this; //si lo es, lo devuelve casteado a cliente,
         }
         return null; //si no lo devuelve nulo
