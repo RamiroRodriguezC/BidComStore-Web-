@@ -46,11 +46,11 @@ public class ClienteController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication(); 
         String email = auth.getName();
         // lo busca en la base de datos
-        Usuario usuario = usuarioService.findByEmail(email)
+        Usuario usuario = usuarioService.buscarPorMail (email)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         // traer pedidos solo de este cliente
-        List<Pedido> pedidos = pedidoService.findByCliente(usuario);
+        List<Pedido> pedidos = pedidoService.buscarPedidosDeCliente(usuario);
         
         //aca basicente le pasa las variables pedidos y clientes al html
         model.addAttribute("pedidos", pedidos);

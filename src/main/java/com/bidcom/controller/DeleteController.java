@@ -49,6 +49,7 @@ public class DeleteController {
     
     @PostMapping("/admin/usuarios/eliminar/{userid}")
     public String eliminarUsuario(@PathVariable Long userid) {
+        System.out.println(" \n\n USUARIO QUE ELIMINAREMOS : " + userid + "\n\n");
         usuarioService.desactivar(userid);
         return "redirect:/admin/usuarios";
     }
@@ -58,4 +59,12 @@ public class DeleteController {
         pedidoService.desactivar(pedidoID);
         return "redirect:/representante/pedidos";
     }
+    
+    @PostMapping("/representante/clientes/eliminar/{userid}")
+    public String eliminarCliente(@PathVariable Long userid) {
+        usuarioService.desactivar(userid);
+        return "redirect:/representante/clientes";
+    }
 }
+    
+

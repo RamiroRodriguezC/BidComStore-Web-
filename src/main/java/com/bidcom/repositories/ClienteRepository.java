@@ -11,6 +11,8 @@ package com.bidcom.repositories;
 
 
 import com.bidcom.model.Cliente;
+import com.bidcom.model.Usuario;
+import com.bidcom.model.rolUsuario;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -40,7 +40,7 @@ public class PedidoService extends BaseService<Pedido, PedidoRepository> {
         return pedidoRepository.findByActivoTrue();
     }
     
-    public List<Pedido> buscarPedidosDeCliente(Cliente cliente){
+    public List<Pedido> buscarPedidosDeCliente(Usuario cliente){
         return pedidoRepository.findByCliente(cliente);
     }
 }

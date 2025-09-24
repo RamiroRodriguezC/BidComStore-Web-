@@ -35,7 +35,7 @@ public class UsuarioService extends BaseService<Usuario, UsuarioRepository> impl
     }
     
     public List<Usuario> buscarPorRol(rolUsuario rol) {
-        return usuarioRepository.findByRol(rol);
+        return usuarioRepository.findByRolAndActivoTrue(rol);
     }
     
     // Editar: se hace recuperando primero el objeto

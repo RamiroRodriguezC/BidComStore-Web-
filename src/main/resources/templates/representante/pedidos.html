@@ -20,7 +20,7 @@
             </div>
             <form th:action="@{/representante/pedidos/eliminar/{pedidoID}(pedidoID=${pedido.pedidoID})}" th:method="post" style="display:inline;">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <button type="submit">Eliminar</button>
+                <button type="submit" onclick="confirmarEliminar(this)" class="btn-danger">Eliminar</button>
             </form>
         </div>
     </div>
