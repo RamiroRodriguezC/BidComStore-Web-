@@ -1,35 +1,49 @@
-/* Fondo degradado (reutilizable) */
+/*
+ * =========================================
+ * 1. FONDO Y CONTENEDOR GLOBAL
+ * =========================================
+ */
 .gradient-bg {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
     height: 100vh;
+    /* Fondo degradado: Azul Bootstrap a Violeta */
     background: linear-gradient(135deg, #0d6efd, #6610f2);
     font-family: Arial, sans-serif;
 }
 
-/* Tarjeta de login (agrega esta clase al <div> principal en HTML) */
+/*
+ * =========================================
+ * 2. TARJETA DE LOGIN (.login-card)
+ * =========================================
+ */
 .login-card {
-    background-color: #2c3e50; /* Fondo oscuro */
+    background-color: #2c3e50; /* Fondo oscuro (gris azulado) */
     padding: 40px; 
     border-radius: 15px; 
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); /* Sombra marcada */
     width: 350px; 
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: white; /* Color de texto general */
+    color: white; 
 }
 
-/* Logo */
+/* Logo dentro de la tarjeta */
 .login-logo {
     width: 190px; 
     height: auto; 
     margin-bottom: 25px; 
-    filter: brightness(0) invert(1); /* Blanco para contraste */
+    /* Filtro para hacer el logo blanco y visible sobre el fondo oscuro */
+    filter: brightness(0) invert(1); 
 }
 
-/* Formulario */
+/*
+ * =========================================
+ * 3. FORMULARIO E INPUTS
+ * =========================================
+ */
 .login-form {
     width: 100%;
     margin-bottom: 20px;
@@ -38,56 +52,60 @@
     align-items: center;
 }
 
-/* Grupo de inputs (flex para futuros iconos) */
+/* Contenedor del grupo de input (para manejar iconos o alinear) */
 .input-group {
     display: flex;
     align-items: center;
-    width: 150%;
-    position: relative; /* Para posicionar iconos si los agregas */
-     margin-bottom: 20px; /* Espacio entre boton y boton*/
+    width: 100%; /* Corregido a 100% para evitar desbordamiento */
+    position: relative; 
+    margin-bottom: 20px; 
 }
 
-/* Inputs base - CAMBIO: Borde visible y sin sobrescritura */
+/* Estilo general para todos los inputs dentro del formulario */
+.login-form input {
+    width: 100%;
+    padding: 12px 15px; 
+    margin: 0;
+    border-radius: 6px;
+    outline: none;
+}
+
+/* Campo de input específico */
 .input-field {
-    width: 100%; /* CAMBIO: 100% completo, sin calc() ya que no hay iconos */
-    padding: 12px 15px; /* Padding uniforme */
-    border: 1.5px solid #ccc; /* CAMBIO: Borde gris visible (o usa 'white' para más contraste) */
-    border-radius: 6px; /* Unificado con el resto */
-    background-color: rgba(255, 255, 255, 0); /* CAMBIO: Fondo semi-transparente sutil para mejor visibilidad */
+    width: 100%; 
+    padding: 12px 15px; 
+    border: 1.5px solid #ccc; /* Borde visible gris */
+    border-radius: 6px; 
+    background-color: rgba(255, 255, 255, 0); /* Fondo transparente */
     font-size: 16px;
     color: white;
     margin-bottom: 10px; /* Espacio entre inputs */
-    transition: border-color 0.3s, box-shadow 0.3s; /* Suave transición */
+    transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s; 
 }
 
+/* Placeholders */
 .input-field::placeholder {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Focus - Mejora visual */
+/* Efecto al enfocar (Focus) */
 .input-field:focus {
-    border-color: white; /* CAMBIO: Borde blanco en focus para resaltar */
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); /* Glow sutil */
-    outline: none; /* Quita outline por defecto */
-    background-color: rgba(255, 255, 255, 0.15); /* Fondo un poco más opaco */
+    border-color: white; 
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); 
+    outline: none; 
+    background-color: rgba(255, 255, 255, 0.15); /* Fondo más opaco al enfocar */
 }
 
-/* Regla general para inputs en login-form - CAMBIO: Elimina border: none; y ajusta */
-.login-form input {
-    width: 100%;
-    padding: 12px 15px; /* Unificado */
-    margin: 0; /* CAMBIO: Sin margin extra, usa el del .input-field */
-    border-radius: 6px;
-    outline: none;
-    /* NO hay border: none; aquí - deja que .input-field lo maneje */
-}
-
-/* Botón */
+/*
+ * =========================================
+ * 4. BOTÓN DE SUBMIT
+ * =========================================
+ */
 .login-form button {
     width: 100%;
     padding: 12px;
     background: white;
-    color: #007bff;
+    color: #007bff; /* Azul primario */
     font-weight: bold;
     border: none;
     border-radius: 6px;
@@ -99,29 +117,23 @@
     background: #e6e6e6;
 }
 
-/* Mensajes */
+/*
+ * =========================================
+ * 5. MENSAJES DE ESTADO
+ * =========================================
+ */
 .msg-error {
     margin-top: 10px;
-    color: #ff4d4d;
+    color: #ff4d4d; /* Rojo para errores */
     text-align: center;
 }
 
 .msg-logout {
     margin-top: 10px;
-    color: #4dff88;
+    color: #4dff88; /* Verde para éxito/logout */
     text-align: center;
 }
 
-/* Si quieres usar .center-box en lugar de .login-card, descomenta esto */
-/*
-.center-box {
-    background: rgba(255, 255, 255, 0.15);
-    padding: 40px;
-    border-radius: 15px;
-    text-align: center;
-    backdrop-filter: blur(8px);
-    color: white;
-    width: 300px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-}
-*/
+/* Comentario: La clase .center-box (comentada en el original) es una alternativa si no se usa .login-card. 
+ * Se recomienda usar .login-card para un diseño más específico de formularios.
+ */

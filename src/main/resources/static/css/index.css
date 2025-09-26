@@ -1,15 +1,26 @@
-
+/*
+ * =========================================
+ * 1. CONTENEDOR PRINCIPAL
+ * =========================================
+ */
 .index-page {
   display: flex;
-  flex-direction: column; /* apila en columnas, asi muestra el boton abajo */
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column; /* Apila el contenido verticalmente */
+  height: 100vh; /* Ocupa toda la altura de la ventana */
+  justify-content: center; /* Centra verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  
+  /* Fondo degradado: Azul Bootstrap a Violeta */
   background: linear-gradient(135deg, #0d6efd, #6610f2);
-  color: white;
+  color: white; /* Texto blanco */
   font-family: Arial, sans-serif;
 }
 
+/*
+ * =========================================
+ * 2. CAJA CENTRADA (Contenido Principal)
+ * =========================================
+ */
 .center-box {
   text-align: center;
 }
@@ -19,18 +30,24 @@
   margin-bottom: 20px;
 }
 
+/*
+ * =========================================
+ * 3. ESTILOS DE BOTÓN (En este contexto)
+ * =========================================
+ */
 .btn {
   display: block;
+  margin-top: 50px; /* Espacio superior */
+  
   background: white;
-  color: #0d6efd;
+  color: #0d6efd; /* Azul Bootstrap */
   padding: 10px 20px;
   border-radius: 6px;
   font-weight: bold;
   text-decoration: none;
-  transition: 0.3s;
-  margin-top: 50px;
+  transition: background 0.3s;
 }
 
 .btn:hover {
-  background: #f1f1f1;
+  background: #f1f1f1; /* Fondo ligeramente gris al pasar el mouse */
 }

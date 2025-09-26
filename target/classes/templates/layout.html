@@ -1,21 +1,15 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Panel de Gestión</title>
     <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
 <body>
+    
     <header class="main-header">
         <img src="/img/BidComStore_logo.png" alt="BidCom Store Logo" class="header-logo">
         
-
-        </th:block>
-        <nav class = "sub-nav-links">
-            <!-- Menú dinámico según el rol -->
+        <nav class="sub-nav-links">
             <ul>
                 <li th:if="${#authorization.expression('hasRole(''ADMINISTRADOR'')')}">
                     <a th:href="@{/admin/usuarios}" class="sub-link">Usuarios</a>
@@ -34,29 +28,35 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </li>
             </ul>
         </nav>
-        
-        <nav class = "sub-nav-links">
+
+        <nav class="sub-nav-links">
             <ul>
                 <li>
-                    <a th:href="@{/logout}" class="sub-link">Cerrar Sesion</a> 
+                    <form th:action="@{/logout}" method="post" style="display: inline;">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <button type="submit" class="btn-danger">
+                            Cerrar Sesión
+                        </button>
+                    </form>
                 </li>
             </ul>
+        </nav>
     </header>
 
     <main>
-        <div class="content-wrapper ">
-            <!-- Botón Crear (solo aparece si se pasa la variable crearUrl) -->
+        <div class="content-wrapper">
             <th:block th:if="${crearUrl != null}">
                 <a th:href="${crearUrl}" class="btn-crear">+ Crear</a>
-                <div th:replace="~{${fragment} :: content}"></div>
+            </th:block>
+            
+            <div th:replace="~{${fragment} :: content}"></div>
         </div>
     </main>
-
 
     <footer>
         <p>© 2025 BidCom</p>
     </footer>
+    
     <script th:src="@{/js/global.js}"></script>
 </body>
 </html>
-

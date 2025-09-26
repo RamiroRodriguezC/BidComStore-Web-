@@ -1,23 +1,28 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <div xmlns:th="http://www.thymeleaf.org" th:fragment="content">
     <link rel="stylesheet" th:href="@{/css/global.css}">
+
     <div class="pedidos-container">
         <div th:each="producto : ${productos}" class="pedido-cards">
-            <h3>Producto #<span th:text="${producto.codigoProducto}"></span></h3>
-            <p><strong>Nombre:</strong> <span th:text="${producto.nombre}"></span></p>
-            <p><strong>Modelo:</strong> <span th:text="${producto.modelo}"></span></p>
-            <p><strong>Descripcion:</strong> <span th:text="${producto.descripcion}"></span></p>
 
-            <a th:href="@{'/admin/productos/edit/' + ${producto.codigoProducto}}" 
-               class="btn-editar">Editar</a>
-            <form th:action="@{/admin/productos/eliminar/{codigoProducto}(codigoProducto=${producto.codigoProducto})}" th:method="post" style="display:inline;">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <button type="button"  onclick="confirmarEliminar(this)" class="btn-danger">Eliminar</button>  
-            </form>
+            <div class="card-content">
+                <h3>Producto #<span th:text="${producto.codigoProducto}"></span></h3>
+                <p><strong>Nombre:</strong> <span th:text="${producto.nombre}"></span></p>
+                <p><strong>Modelo:</strong> <span th:text="${producto.modelo}"></span></p>
+                <p><strong>Descripcion:</strong> <span th:text="${producto.descripcion}"></span></p>
+            </div>
+
+            <div class="card-actions">
+                <a th:href="@{'/admin/productos/edit/' + ${producto.codigoProducto}}" 
+                   class="btn-editar">Editar</a>
+
+                <form th:action="@{/admin/productos/eliminar/{codigoProducto}(codigoProducto=${producto.codigoProducto})}" 
+                      method="post" 
+                      onsubmit="return confirmarEliminar(this);"> 
+
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <button type="submit" class="btn-danger">Eliminar</button> 
+                </form>
+            </div>
         </div>
     </div>
 </div>
