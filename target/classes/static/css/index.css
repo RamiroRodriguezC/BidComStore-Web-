@@ -1,6 +1,7 @@
 
 .index-page {
   display: flex;
+  flex-direction: column; /* apila en columnas, asi muestra el boton abajo */
   height: 100vh;
   justify-content: center;
   align-items: center;
@@ -19,7 +20,7 @@
 }
 
 .btn {
-  display: inline-block;
+  display: block;
   background: white;
   color: #0d6efd;
   padding: 10px 20px;
@@ -27,6 +28,7 @@
   font-weight: bold;
   text-decoration: none;
   transition: 0.3s;
+  margin-top: 50px;
 }
 
 .btn:hover {

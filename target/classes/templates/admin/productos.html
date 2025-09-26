@@ -4,11 +4,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
 <div xmlns:th="http://www.thymeleaf.org" th:fragment="content">
-    <h2>¡Fragmento cargado correctamente!</h2>
     <link rel="stylesheet" th:href="@{/css/global.css}">
     <div class="pedidos-container">
         <div th:each="producto : ${productos}" class="pedido-cards">
-            <h2>Producto #<span th:text="${producto.codigoProducto}"></span></h2>
+            <h3>Producto #<span th:text="${producto.codigoProducto}"></span></h3>
             <p><strong>Nombre:</strong> <span th:text="${producto.nombre}"></span></p>
             <p><strong>Modelo:</strong> <span th:text="${producto.modelo}"></span></p>
             <p><strong>Descripcion:</strong> <span th:text="${producto.descripcion}"></span></p>

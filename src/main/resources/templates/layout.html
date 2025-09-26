@@ -9,37 +9,47 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
 <body>
-    <header>
-        <h1>Panel de Gestión</h1>
+    <header class="main-header">
+        <img src="/img/BidComStore_logo.png" alt="BidCom Store Logo" class="header-logo">
         
-            <!-- Botón Crear (solo aparece si se pasa la variable crearUrl) -->
-            <th:block th:if="${crearUrl != null}">
-                <a th:href="${crearUrl}" class="btn-crear">+ Crear</a>
-            </th:block>
-        <nav>
+
+        </th:block>
+        <nav class = "sub-nav-links">
             <!-- Menú dinámico según el rol -->
             <ul>
                 <li th:if="${#authorization.expression('hasRole(''ADMINISTRADOR'')')}">
-                    <a th:href="@{/admin/usuarios}">Usuarios</a>
+                    <a th:href="@{/admin/usuarios}" class="sub-link">Usuarios</a>
                 </li>
                 <li th:if="${#authorization.expression('hasRole(''ADMINISTRADOR'')')}">
-                    <a th:href="@{/admin/productos}">Productos</a>
+                    <a th:href="@{/admin/productos}" class="sub-link">Productos</a>
                 </li>
                 <li th:if="${#authorization.expression('hasRole(''REPRESENTANTE_VENTAS'')')}">
-                    <a th:href="@{/representante/clientes}">Clientes</a>
+                    <a th:href="@{/representante/clientes}" class="sub-link">Clientes</a>
                 </li>
                 <li th:if="${#authorization.expression('hasRole(''REPRESENTANTE_VENTAS'')')}">
-                    <a th:href="@{/representante/pedidos}">Pedidos</a>
+                    <a th:href="@{/representante/pedidos}" class="sub-link">Pedidos</a>
                 </li>
                 <li th:if="${#authorization.expression('hasRole(''CLIENTE'')')}">
-                    <a th:href="@{/cliente/mispedidos}">Mis pedidos</a>
+                    <a th:href="@{/cliente/mispedidos}" class="sub-link">Mis pedidos</a>
                 </li>
             </ul>
         </nav>
+        
+        <nav class = "sub-nav-links">
+            <ul>
+                <li>
+                    <a th:href="@{/logout}" class="sub-link">Cerrar Sesion</a> 
+                </li>
+            </ul>
     </header>
 
     <main>
-        <div th:replace="~{${fragment} :: content}"></div>
+        <div class="content-wrapper ">
+            <!-- Botón Crear (solo aparece si se pasa la variable crearUrl) -->
+            <th:block th:if="${crearUrl != null}">
+                <a th:href="${crearUrl}" class="btn-crear">+ Crear</a>
+                <div th:replace="~{${fragment} :: content}"></div>
+        </div>
     </main>
 
 

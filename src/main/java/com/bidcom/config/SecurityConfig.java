@@ -25,7 +25,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests()
                 //Permitir el acceso publico a los recursos estaticos
-                .requestMatchers("/css/**", "/js/**", "/images/**").permitAll() // el resto pide login
+                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll() // el resto pide login
 
                 //Definir los endpoints publicos
                 .requestMatchers("/", "/index", "/login").permitAll()

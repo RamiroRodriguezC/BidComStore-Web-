@@ -6,13 +6,81 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Created on : 12 sep. 2025, 16:15:01
     Author     : Ramiro
 */
+
+/* ESTILOS DEL CONTENEDOR PRINCIPAL DEL HEADER */
+.main-header {
+    /* El degradado de fondo que te gustó (azul a violeta) */
+    background: linear-gradient(to right, #0d47a1, #6610f2); 
+    color: white; /* Para que el texto que tenga adentro sea blanco */
+    
+    /* Propiedades para hacerlo rectangular y compacto */
+    padding: 10px 30px;  /* Un padding bajo vertical (8px) lo hace compacto */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    
+    /* Display Flex es fundamental para el paso siguiente (alineación) */
+    display: flex; 
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: space-between; /* Deja espacio entre logo y navegación */
+}
+
+.header-logo {
+    /* SUBIMOS LA ALTURA DEL LOGO */
+    height: 45px; 
+    width: auto; 
+    margin-right: 20px; 
+    min-width: 45px !important; 
+    min-height: 45px !important;
+}
+
+/* ======================================================= */
+/* ESTILOS DE LA BARRA PROLIJA DEBAJO DEL HEADER */
+/* ======================================================= */
+.sub-nav-links ul {
+    list-style: none; /* CLAVE: QUITA LOS PUNTOS */
+    margin: 0;
+    padding: 0;
+    display: flex; /* CLAVE: PONE LOS <li> EN UNA FILA */
+    gap: 25px; /* Espacio entre los enlaces (Usuarios y Productos) */
+}
+
+.sub-nav-links li {
+    margin: 0;
+}
+
+.sub-nav-links .sub-link {
+    text-decoration: none;
+    color: lightgray; /* Un color claro para resaltar sobre el fondo oscuro */
+    font-weight: 600;
+    padding-bottom: 5px; /* Pequeño padding para la separación */
+    transition: color 0.2s;
+}
+
+.sub-nav-links .sub-link:hover {
+    color: mediumvioletred; /* Azul al pasar el mouse */
+}
+
+/* ======================================================= */
+/* CONTENEDOR PRINCIPAL DEL CONTENIDO (Tarjetas y Botón) */
+/* ======================================================= */
+
+.content-wrapper {
+    /* CLAVE 1: Define un ancho máximo para que no se extienda demasiado en pantallas muy grandes */
+    max-width: 1400px; 
+    
+    /* CLAVE 2: Margen lateral. 'auto' centra el bloque si tiene un max-width. */
+    margin: 30px auto; 
+    
+    /* CLAVE 3: Un padding interno para asegurar espacio en los bordes izquierdo/derecho en pantallas pequeñas. */
+    padding: 0 30px; 
+}
+
 body {
   margin: 0; /* elimina el margen por defecto */
   height: 100vh; /* ocupa toda la altura de la ventana */
-  background: linear-gradient(135deg, #0d6efd, #6610f2);
-  color: white;
+  background-color: #f8f9fa; 
+  color: #333;
   font-family: Arial, sans-serif;
-  padding: 20px; /* margen interno alrededor del contenido */
+  padding: 0px; /* margen interno alrededor del contenido */
 }
 
 .pedidos-container {
@@ -22,16 +90,28 @@ body {
 }
 
 .pedido-cards {
-    border: 1px solid #ccc;
+    flex-direction: column;
+    background-color: #f0f0f0; 
+    
+    /* Borde más sutil aún */
+    border: 1px solid #e0e0e0; 
     border-radius: 10px;
     padding: 15px;
     width: 250px;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-    background-color: rgba(255, 255, 255, 0.15);
+    
+    /* Ajuste de sombra para hacerla más suave */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    color: #333; /* Texto oscuro */
+    
 }
 
 .pedido-cards h2 {
     margin-top: 0;
+}
+
+.card-content {
+    flex-grow: 1; 
+    margin-bottom: 15px; /* Espacio entre la descripción y los botones */
 }
 
 .items ul {

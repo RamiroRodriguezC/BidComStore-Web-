@@ -1,9 +1,8 @@
 <div th:fragment="content">
-    <h2>¡Fragmento cargado correctamente!</h2>
     <link rel="stylesheet" th:href="@{/css/global.css}">
     <div class="pedidos-container">
         <div th:each="pedido : ${pedidos}" class="pedido-cards">
-            <h2>Pedido #<span th:text="${pedido.pedidoID}"></span></h2>
+            <h3>Pedido #<span th:text="${pedido.pedidoID}"></span></h3>
             <p><strong>Estado:</strong> <span th:text="${pedido.estado}"></span></p>
             <p><strong>Fecha:</strong> <span th:text="${pedido.fechaHoraCreacion}"></span></p>
             <div class="items">

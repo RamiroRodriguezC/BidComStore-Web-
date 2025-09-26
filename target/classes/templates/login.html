@@ -7,11 +7,15 @@
 
 </head>
 <body class="gradient-bg">
-    <div class="center-box">
-        <h1>Iniciar Sesión</h1>
-        <form th:action="@{/login}" method="post">
-            <input type="text" name="username" placeholder="Usuario" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
+    <div>
+        <img src="/img/BidComStore_cart.png" alt="BidCom Store Logo" class="login-logo">
+        <form class="login-form" th:action="@{/login}" method="post">
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Email"  class="input-field" required>
+            </div>
+            <div class="input-group">
+            <input type="password" name="password" placeholder="Contraseña" class="input-field" required>
+            </div>
             <button type="submit">Ingresar</button>
         </form>
 
@@ -21,3 +25,4 @@
     </div>
 </body>
 </html>
+
