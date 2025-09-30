@@ -12,6 +12,6 @@ package com.bidcom.model;
 //Interfaz para los objetos desactivables (que podemos eliminar de la base de datos)
 
 public interface Desactivable {
-    void setActivo(boolean activo);
-    boolean isActivo();
+    void setEnabled(boolean activo);
+    boolean isEnabled();
 }

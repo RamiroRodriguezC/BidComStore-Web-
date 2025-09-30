@@ -1,35 +1,42 @@
-<div th:fragment="content">
-    <link rel="stylesheet" th:href="@{/css/global.css}">
-    
-    <div class="pedidos-container">
-        <div th:each="pedido : ${pedidos}" class="pedido-cards">
+<div th:fragment="content" xmlns:th="http://www.thymeleaf.org">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        
+        <div th:each="pedido : ${pedidos}" class="col">
             
-            <div class="card-content">
-                <h3>Pedido #<span th:text="${pedido.pedidoID}"></span></h3>
-                <p><strong>Estado:</strong> <span th:text="${pedido.estado}"></span></p>
-                <p><strong>Fecha:</strong> <span th:text="${pedido.fechaHoraCreacion}"></span></p>
+            <div class="card h-100 shadow-sm">
                 
-                <div class="items">
-                    <h3>Items:</h3>
-                    <ul>
-                        <li th:each="item : ${pedido.items}">
-                            <span th:text="${item.producto.nombre}"></span>
-                            <span th:text="${item.producto.modelo}"></span>
-                            $<span th:text="${item.precio}"></span>
-                            (x<span th:text="${item.cantidad}"></span>)
-                        </li>
-                    </ul>
+                <div class="card-body">
+                    <h5 class="card-title">Pedido #<span th:text="${pedido.pedidoID}"></span></h5>
+                    <p class="card-text"><strong>Estado:</strong> <span th:text="${pedido.estado}"></span></p>
+                    <p class="card-text"><strong>Fecha:</strong> <span th:text="${pedido.fechaHoraCreacion}"></span></p>
+                    
+                    <div class="items mt-3">
+                        <h6>Items:</h6>
+                        <ul class="list-group list-group-flush small">
+                            <li th:each="item : ${pedido.items}" class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span th:text="${item.producto.nombre}"></span> - 
+                                    <span class="text-muted" th:text="${item.producto.modelo}"></span>
+                                </div>
+                                <span>
+                                    $<span th:text="${item.precio}"></span>
+                                    (x<span th:text="${item.cantidad}"></span>)
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="card-actions">
-                <form th:action="@{/representante/pedidos/eliminar/{pedidoID}(pedidoID=${pedido.pedidoID})}" 
-                      method="post" 
-                      onsubmit="return confirmarEliminar(this);">  
-                      
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                    <button type="submit" class="btn-danger">Eliminar</button> 
-                </form>
+                
+                <div class="card-footer d-flex justify-content-end p-3">
+                    <form th:action="@{/representante/pedidos/eliminar/{pedidoID}(pedidoID=${pedido.pedidoID})}" 
+                          method="post" 
+                          onsubmit="return confirmarEliminar(this);"
+                          style="margin: 0;">  
+                          
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button> 
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -60,7 +60,7 @@ public class EditController {
     }
 
     
-    @GetMapping({"/admin/usuarios/edit/{userid}", "/representante/cliente/edit/{userid}"})
+    @GetMapping({"/admin/usuarios/edit/{userid}", "/representante/clientes/edit/{userid}"})
     public String editarUsuario(@PathVariable Long userid, Model model, HttpServletRequest request) {
         Usuario usuario = usuarioService.buscarPorLlavePrimaria(userid)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + userid));
@@ -76,7 +76,8 @@ public class EditController {
     }
 
     @PostMapping("/admin/usuarios/actualizar")
-    public String actualizarUsuarioDesdeAdmin(@ModelAttribute("usuario") Usuario usuarioForm) {
+    public String actualizarUsuarioDesdeAdmin(@ModelAttribute("usuario") Cliente usuarioForm) {
+        
         return actualizarUsuario(usuarioForm, false);
     }
 
@@ -115,6 +116,7 @@ private String actualizarUsuario(Usuario usuarioForm, boolean calledByRepresenta
 
     return calledByRepresentante ? "redirect:/representante/clientes" : "redirect:/admin/usuarios";
 }
+
 
 
 

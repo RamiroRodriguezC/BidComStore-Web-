@@ -1,39 +1,46 @@
-<form th:action="${calledByRepresentante} ? @{/representante/clientes/actualizar} : @{/admin/usuarios/actualizar}" th:object="${usuario}" method="post">
+<form th:action="${calledByRepresentante} ? @{/representante/clientes/actualizar} : @{/admin/usuarios/actualizar}" 
+      th:object="${usuario}" 
+      method="post">
+    
     <input type="hidden" th:field="*{userid}" />
 
-
-
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" th:field="*{email}" required/>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" id="email" th:field="*{email}" class="form-control" required/>
     </div>
 
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" />
-        <small>Dejar vacío para no cambiar la contraseña.</small>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password:</label>
+        <input type="password" id="password" name="password" class="form-control" />
+        <small class="form-text text-muted">Dejar vacío para no cambiar la contraseña.</small>
     </div>
 
-    <div>
-        <label>Rol:</label>
-        <p th:text="${usuario.rol}"></p>
+    <div class="mb-3">
+        <label class="form-label">Rol:</label>
+        <p class="form-control-static" th:text="${usuario.rol}"></p> 
         <input type="hidden" th:field="*{rol}" />
     </div>
 
-    <div th:if="${usuario.rol.toString() == 'CLIENTE'}">
-        <div>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" th:field="*{nombre}" />
+    <div th:if="${usuario.rol.toString() == 'CLIENTE'}" class="border p-3 rounded mt-3">
+        <h5 class="mb-3">Información de Contacto del Cliente</h5>
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" class="form-control" />
         </div>
-        <div>
-            <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" th:field="*{apellido}" />
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido:</label>
+            <input type="text" id="apellido" th:field="*{apellido}" class="form-control" />
         </div>
-        <div>
-            <label for="numeroTelefonico">Teléfono:</label>
-            <input type="text" id="numeroTelefonico" th:field="*{numeroTelefonico}" />
+        <div class="mb-3">
+            <label for="numeroTelefonico" class="form-label">Teléfono:</label>
+            <input type="text" id="numeroTelefonico" th:field="*{numeroTelefonico}" class="form-control" />
         </div>
     </div>
 
-    <button type="submit">Actualizar</button>
+    <div class="d-flex gap-2 mt-4">
+        <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+        <a th:href="${calledByRepresentante} ? @{/representante/clientes} : @{/admin/usuarios}" 
+           class="btn btn-secondary">Cancelar</a>
+    </div>
+    <script th:src="@{/js/formUsuario.js}"></script>
 </form>

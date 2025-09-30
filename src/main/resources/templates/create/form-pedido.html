@@ -1,36 +1,43 @@
 <div th:fragment="form-pedido">
     <form th:action="@{/representante/pedidos/guardar}" th:object="${pedido}" method="post">
-        <h2>Crear Pedido</h2>
+        <h2 class="mb-4">Crear Pedido</h2>
 
-        <label for="cliente">Cliente:</label>
-        <select id="cliente" th:field="*{cliente.userid}">
-            <option th:each="cliente : ${clientes}"
-                    th:value="${cliente.userid}"
-                    th:text="${cliente.nombre + ' ' + cliente.apellido + ' (' + cliente.email + ')'}">
-            </option>
-        </select>
+        <div class="mb-3">
+            <label for="cliente" class="form-label">Cliente:</label>
+            <select id="cliente" th:field="*{cliente.userid}" class="form-select">
+                <option th:each="cliente : ${clientes}"
+                        th:value="${cliente.userid}"
+                        th:text="${cliente.nombre + ' ' + cliente.apellido + ' (' + cliente.email + ')'}">
+                </option>
+            </select>
+        </div>
 
-        <h3>Ítems del Pedido</h3>
+        <h3 class="mt-5 mb-3 border-bottom pb-2">Ítems del Pedido</h3>
         <div id="items-container">
-            <div class="item-form" th:each="item, stat : *{items}">
-                <h4>Ítem <span th:text="${stat.count}">1</span></h4>
-                <div class="form-group">
-                    <label>Producto:</label>
-                    <select th:field="*{items[__${stat.index}__].producto.codigoProducto}">
+            <div class="item-form p-3 border rounded mb-3" th:each="item, stat : *{items}">
+                <h4 class="h5">Ítem <span th:text="${stat.count}">1</span></h4>
+                
+                <div class="mb-3">
+                    <label class="form-label">Producto:</label>
+                    <select th:field="*{items[__${stat.index}__].producto.codigoProducto}" class="form-select">
                         <option th:each="producto : ${productos}"
                                 th:value="${producto.codigoProducto}"
                                 th:text="${producto.nombre}"></option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>Cantidad:</label>
-                    <input type="number" th:field="*{items[__${stat.index}__].cantidad}" required min="1">
+                
+                <div class="mb-3">
+                    <label class="form-label">Cantidad:</label>
+                    <input type="number" th:field="*{items[__${stat.index}__].cantidad}" 
+                           class="form-control" required min="1">
                 </div>
             </div>
         </div>
 
-        <button type="button" id="add-item">Agregar otro ítem</button>
-        <button type="submit">Guardar Pedido</button>
+        <div class="d-flex gap-2 mt-4">
+            <button type="button" id="add-item" class="btn btn-secondary">Agregar otro ítem</button>
+            <button type="submit" class="btn btn-primary">Guardar Pedido</button>
+        </div>
     </form>
     <script th:src="@{/js/formPedido.js}"></script>
 </div>

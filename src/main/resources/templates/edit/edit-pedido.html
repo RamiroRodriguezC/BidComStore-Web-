@@ -1,15 +1,40 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<form th:action="@{/representante/pedidos/actualizar}" 
+      th:object="${pedido}" 
+      method="post">
+    
+    <input type="hidden" th:field="*{pedidoID}" />
+
+    <h2 class="h4 mb-4">Editar Pedido #<span th:text="*{pedidoID}"></span></h2>
+
+    <div class="mb-3">
+        <label class="form-label">Cliente:</label>
+        <p class="form-control-static" th:text="*{cliente.nombre + ' ' + cliente.apellido}"></p>
+    </div>
+
+    <div class="mb-3">
+        <label for="estado" class="form-label">Estado:</label>
+        <select id="estado" th:field="*{estado}" class="form-select">
+            <option th:each="estado : ${T(com.bidcom.model.EstadoPedido).values()}"
+                    th:value="${estado.name()}"
+                    th:text="${estado.name()}">
+            </option>
+        </select>
+    </div>
+
+    <h3 class="h5 mt-4">Ítems del Pedido (Solo Lectura)</h3>
+    <ul class="list-group mb-4">
+        <li th:each="item : *{items}" class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <span th:text="${item.producto.nombre}">Nombre Producto</span>
+                (<span th:text="${item.producto.modelo}">Modelo</span>)
+                <span class="badge bg-info text-dark ms-2" th:text="'x' + ${item.cantidad}">x1</span>
+            </div>
+            <strong>$<span th:text="${#numbers.formatDecimal(item.precio, 0, 'COMMA', 2, 'POINT')}">100.00</span></strong>
+        </li>
+    </ul>
+
+    <div class="d-flex gap-2 mt-4">
+        <button type="submit" class="btn btn-primary">Actualizar Pedido</button>
+        <a th:href="@{/representante/pedidos}" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

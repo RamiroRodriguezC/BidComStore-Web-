@@ -1,26 +1,30 @@
 <div xmlns:th="http://www.thymeleaf.org" th:fragment="content">
-     <link rel="stylesheet" th:href="@{/css/global.css}">
-     
-    <div class="pedidos-container">
-        <div th:each="usuario : ${usuarios}" class="pedido-cards">
+     <div class="row row-cols-1 row-cols-md-3 g-4">
+        
+        <div th:each="usuario : ${usuarios}" class="col">
             
-            <div class="card-content">
-                <h2>Usuario #<span th:text="${usuario.userID}"></span></h2>
-                <p><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
-                <p><strong>Rol:</strong> <span th:text="${usuario.rol}"></span></p>
-            </div>
-            
-            <div class="card-actions">
-                <a th:href="@{'/admin/usuarios/edit/' + ${usuario.userID}}" 
-                   class="btn-editar">Editar</a>
+            <div class="card h-100 shadow-sm">
+                
+                <div class="card-body">
+                    <h5 class="card-title">Usuario #<span th:text="${usuario.userID}"></span></h5>
+                    <p class="card-text"><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
+                    <p class="card-text"><strong>Rol:</strong> <span th:text="${usuario.rol}"></span></p>
+                </div>
+                
+                <div class="card-footer d-flex gap-2 p-3">
+                    
+                    <a th:href="@{'/admin/usuarios/edit/' + ${usuario.userID}}" 
+                       class="btn btn-warning btn-sm">Editar</a>
 
-                <form th:action="@{/admin/usuarios/eliminar/{userid}(userid=${usuario.userid})}" 
-                      method="post" 
-                      onsubmit="return confirmarEliminar(this);">  
-                      
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                    <button type="submit" class="btn-danger">Eliminar</button> 
-                </form>
+                    <form th:action="@{/admin/usuarios/eliminar/{userid}(userid=${usuario.userid})}" 
+                          method="post" 
+                          onsubmit="return confirmarEliminar(this);"
+                          style="margin: 0;">  
+                          
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button> 
+                    </form>
+                </div>
             </div>
         </div>
     </div>

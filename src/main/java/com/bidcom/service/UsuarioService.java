@@ -31,7 +31,7 @@ public class UsuarioService extends BaseService<Usuario, UsuarioRepository> impl
     }
 
     public Optional<Usuario> buscarPorMail(String mail) {
-        return usuarioRepository.findByEmail(mail);
+        return usuarioRepository.findByEmailAndActivoTrue(mail);
     }
     
     public List<Usuario> buscarPorRol(rolUsuario rol) {
@@ -52,8 +52,7 @@ public class UsuarioService extends BaseService<Usuario, UsuarioRepository> impl
     
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("========= BUSCANDO POR EMAIL ========= \n " + email);
-        Usuario usuario = usuarioRepository.findByEmail(email)
+        Usuario usuario = usuarioRepository.findByEmailAndActivoTrue(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
         return User.builder()
@@ -70,6 +69,12 @@ public class UsuarioService extends BaseService<Usuario, UsuarioRepository> impl
 
     public List<Usuario> buscarTodos() {
         return usuarioRepository.findByActivoTrue();
+    }
+    
+    public boolean isEmpty() {
+        usuarioRepository.flush();
+        System.out.println("\n\n\n\n\n\n usuarios q cuento: "+ usuarioRepository.count() + "\n\n\n\n\n\n");
+        return usuarioRepository.count() == 0;
     }
     // Crear o actualizar (Spring maneja ambos con save)
 

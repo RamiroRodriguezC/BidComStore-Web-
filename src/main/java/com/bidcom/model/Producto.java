@@ -67,11 +67,11 @@ public class Producto implements Desactivable {
         this.precio = precio;
     }
 
-    public boolean isActivo() {
+    public boolean isEnabled() {
         return activo;
     }
 
-    public void setActivo(boolean activo) {
+    public void setEnabled(boolean activo) {
         this.activo = activo;
     }
 

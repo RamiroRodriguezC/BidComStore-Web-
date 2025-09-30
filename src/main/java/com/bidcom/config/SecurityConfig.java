@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .requestMatchers("/css/**", "/js/**", "/img/**").permitAll() // el resto pide login
 
                 //Definir los endpoints publicos
-                .requestMatchers("/", "/index", "/login").permitAll()
+                .requestMatchers("/", "/index", "/login", "/setup/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/clientes/**").hasRole("CLIENTE")
                 .requestMatchers(HttpMethod.POST, "/representante/**").hasRole("REPRESENTANTE_VENTAS")
                 .requestMatchers(HttpMethod.POST,"/admin/**").hasRole("ADMINISTRADOR")

@@ -33,7 +33,7 @@ public abstract class BaseService<T extends Desactivable, R extends JpaRepositor
         Optional<T> entidadOptional = buscarPorLlavePrimaria(pk);
         if (entidadOptional.isPresent()) {
             T entidad = entidadOptional.get();
-            entidad.setActivo(false);
+            entidad.setEnabled(false);
             repository.save(entidad);
         }
     }

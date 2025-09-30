@@ -69,11 +69,13 @@ public class Usuario implements UserDetails,Desactivable {
         this.rol = rol;
     }
 
-    public boolean isActivo() {
+    @Override
+    public boolean isEnabled() {
         return activo;
     }
 
-    public void setActivo(boolean activo) {
+    @Override
+    public void setEnabled(boolean activo) {
         this.activo = activo;
     }
     
@@ -109,12 +111,6 @@ public class Usuario implements UserDetails,Desactivable {
     public boolean isCredentialsNonExpired() {
         return UserDetails.super.isCredentialsNonExpired(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
-
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-    }
-
     /**
      * Devuelve el cliente asociado si el usuario es un Cliente. Retorna null si
      * no es un Cliente (por ejemplo Administrador o Representante).

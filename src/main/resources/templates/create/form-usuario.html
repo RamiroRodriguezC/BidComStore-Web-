@@ -1,48 +1,50 @@
-<!-- Segun si es admin o representante me manda a una u otra ruta luego de pulsar el boton-->
 <form th:action="${forzarCliente} ? @{/representante/clientes/guardar} : @{/admin/usuarios/guardar}"
       th:object="${usuario}" method="post">
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" th:field="*{email}" required/>
+    
+    <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" id="email" th:field="*{email}" class="form-control" required/>
     </div>
 
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" th:field="*{password}" required/>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password:</label>
+        <input type="password" id="password" th:field="*{password}" class="form-control" required/>
     </div>
 
-    <div>
-        <label for="rol">Rol:</label>
-        <select th:unless="${forzarCliente}" id="rol" th:field="*{rol}">
+    <div class="mb-3">
+        <label for="rol" class="form-label">Rol:</label>
+        <select th:unless="${forzarCliente}" id="rol" th:field="*{rol}" class="form-select">
             <option th:each="rolEnum : ${T(com.bidcom.model.rolUsuario).values()}"
                     th:value="${rolEnum.name()}"
                     th:text="${rolEnum.name()}"
                     th:selected="${rolEnum.name() == usuario.rol?.name()}"></option>
         </select>
-    
+        
         <div th:if="${forzarCliente}">
-            <span th:text="${usuario.getRol()}"></span>
+            <p class="form-control-plaintext" th:text="${usuario.getRol()}"></p>
             <input type="hidden" name="rol" th:field="*{rol}" />
         </div>
     </div>
-<!-- campos cliente -->
-    <div id="cliente-fields" style="display: none;">
-        <div>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" />
+
+    <div id="cliente-fields" style="display: none;" class="p-3 border rounded mb-3 bg-light">
+        <h5 class="mb-3">Datos del Cliente</h5>
+        
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" />
         </div>
-        <div>
-            <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" />
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" class="form-control" />
         </div>
-        <div>
-            <label for="numeroTelefonico">Teléfono:</label>
-            <input type="text" id="numeroTelefonico" name="numeroTelefonico" />
+        <div class="mb-3">
+            <label for="numeroTelefonico" class="form-label">Teléfono:</label>
+            <input type="text" id="numeroTelefonico" name="numeroTelefonico" class="form-control" />
         </div>
     </div>
     
-    <button type="submit">Crear</button>
-</form>
-   <!-- Script javaScript para mostrar de forma dinamica los campos de cliente
-   si cliente es seleccionado como rol -->
-   <script th:src="@{/js/formUsuario.js}"></script>
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Crear</button>
+    </div>
+    <script th:src="@{/js/formUsuario.js}"></script>
+   </form>

@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>  {
     //optional devuelve Optional.empty() si no encuentra coincidencia, 
     //evita nullPointerExeption
-    Optional<Usuario> findByEmail(String email);
+    Optional<Usuario> findByEmailAndActivoTrue(String email);
     
     Optional<Usuario> findByUserid(Long userid);
 

@@ -1,27 +1,31 @@
-<div th:fragment="content">
-    <link rel="stylesheet" th:href="@{/css/global.css}">
-    
-    <div class="pedidos-container">
-        <div th:each="cliente : ${clientes}" class="pedido-cards">
+<div th:fragment="content" xmlns:th="http://www.thymeleaf.org">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        
+        <div th:each="cliente : ${clientes}" class="col">
             
-            <div class="card-content">
-                <h2>Cliente #<span th:text="${cliente.userID}"></span></h2>
-                <p><strong>Nombre:</strong> <span th:text="${cliente.nombre}"></span></p>
-                <p><strong>Apellido:</strong> <span th:text="${cliente.apellido}"></span></p>
-                <p><strong>Telefono:</strong> <span th:text="${cliente.numeroTelefonico}"></span></p>
-            </div>
-            
-            <div class="card-actions">
-                <a th:href="@{'/representante/clientes/edit/' + ${cliente.userid}}" 
-                   class="btn-editar">Editar</a>
-                   
-                <form th:action="@{/representante/clientes/eliminar/{userid}(userid=${cliente.userid})}" 
-                      method="post" 
-                      onsubmit="return confirmarEliminar(this);">  
-                      
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                    <button type="submit" class="btn-danger">Eliminar</button> 
-                </form>
+            <div class="card h-100 shadow-sm">
+                
+                <div class="card-body">
+                    <h5 class="card-title">Cliente #<span th:text="${cliente.userID}"></span></h5>
+                    <p class="card-text"><strong>Nombre:</strong> <span th:text="${cliente.nombre}"></span></p>
+                    <p class="card-text"><strong>Apellido:</strong> <span th:text="${cliente.apellido}"></span></p>
+                    <p class="card-text"><strong>Telefono:</strong> <span th:text="${cliente.numeroTelefonico}"></span></p>
+                </div>
+                
+                <div class="card-footer d-flex gap-2 p-3">
+                    
+                    <a th:href="@{'/representante/clientes/edit/' + ${cliente.userid}}" 
+                       class="btn btn-warning btn-sm">Editar</a>
+                       
+                    <form th:action="@{/representante/clientes/eliminar/{userid}(userid=${cliente.userid})}" 
+                          method="post" 
+                          onsubmit="return confirmarEliminar(this);"
+                          style="margin: 0;">  
+                          
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button> 
+                    </form>
+                </div>
             </div>
         </div>
     </div>
