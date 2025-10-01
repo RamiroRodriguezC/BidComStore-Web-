@@ -27,6 +27,39 @@ El sistema sigue el patrón **MVC (Modelo-Vista-Controlador)** con una estricta 
 * **Soft Delete (`activo`):** Implementación de **borrado lógico** en entidades clave (`Usuario`, `Producto`, `Pedido`). Esto asegura la **integridad de los datos** y permite la auditoría.
 * **Herencia de Entidades:** Uso de herencia de JPA (`Usuario` como clase base para `Cliente`) para modelar correctamente la estructura de usuarios.
 
+### 2.2 Estructura de directorios clave
+´´´text
+bidcom-ecommerce/
+├── src/
+│   ├── main/
+│   │   ├── java/com/bidcom/
+│   │   │   ├── config/             # Configuración de Spring (Spring Security, MVC, JPA)
+│   │   │   ├── controller/         # Lógica de manejo de peticiones (MVC)
+│   │   │   │   ├── AdminController.java      # Muestra la lista de Usuarios y Productos para el rol ADMIN.
+│   │   │   │   ├── ClienteController.java    # Gestión de pedidos del cliente logueado (Ruta: /cliente/mispedidos).
+│   │   │   │   ├── CreateController.java     # Maneja todas las operaciones de CREACIÓN (Producto, Usuario, Pedido).
+│   │   │   │   ├── DeleteController.java     # Maneja todas las operaciones de BORRADO LÓGICO (Soft Delete).
+│   │   │   │   ├── EditController.java       # Maneja todas las operaciones de EDICIÓN/ACTUALIZACIÓN.
+│   │   │   │   ├── HomeController.java       # Punto de entrada y redirecciones iniciales.
+│   │   │   │   ├── LoginController.java      # Muestra el formulario de login.
+│   │   │   │   ├── RepresentanteController.java # Muestra la lista de Clientes y Pedidos para el rol REPRESENTANTE.
+│   │   │   │   └── SetupController.java      # Wizzard de inicialización para crear el primer usuario ADMIN.
+│   │   │   ├── model/              # Entidades JPA (Usuario, Producto, Pedido, Cliente)
+│   │   │   ├── repositories/       # Repositorios Spring Data JPA
+│   │   │   └── service/            # Lógica de Negocio y Transacciones
+│   │   └── resources/
+│   │       ├── templates/          # Vistas Thymeleaf (HTML)
+│   │       ├── static/             # Archivos estáticos (CSS, JS, imágenes)
+│   │       └── application.properties # Archivo de configuración principal (DB, puertos, logging)
+│   │
+│   └── test/
+│       └── java/com/bidcom/       # Código para pruebas unitarias e integración
+│
+├── pom.xml                       # Dependencias y configuración de Maven
+├── .gitignore
+└── README.md
+´´´
+
 ## 3. Gestión de Seguridad y Roles
 
 La seguridad es gestionada por **Spring Security**, controlando el acceso a recursos mediante una estructura de roles bien definida.
