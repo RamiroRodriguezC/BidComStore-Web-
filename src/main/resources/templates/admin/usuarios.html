@@ -6,14 +6,14 @@
             <div class="card h-100 shadow-sm">
                 
                 <div class="card-body">
-                    <h5 class="card-title">Usuario #<span th:text="${usuario.userID}"></span></h5>
+                    <h5 class="card-title">Usuario #<span th:text="${usuario.userid}"></span></h5>
                     <p class="card-text"><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
                     <p class="card-text"><strong>Rol:</strong> <span th:text="${usuario.rol}"></span></p>
                 </div>
                 
                 <div class="card-footer d-flex gap-2 p-3">
                     
-                    <a th:href="@{'/admin/usuarios/edit/' + ${usuario.userID}}" 
+                    <a th:href="@{'/admin/usuarios/edit/' + ${usuario.userid}}" 
                        class="btn btn-warning btn-sm">Editar</a>
 
                     <form th:action="@{/admin/usuarios/eliminar/{userid}(userid=${usuario.userid})}" 

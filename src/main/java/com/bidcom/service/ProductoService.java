@@ -1,42 +1,32 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.bidcom.service;
 
-import com.bidcom.model.Cliente;
 import com.bidcom.model.Producto;
-import com.bidcom.model.Usuario;
 import com.bidcom.repositories.ProductoRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author Ramiro
- */
-
 @Service
 public class ProductoService extends BaseService<Producto, ProductoRepository> {
-    private final ProductoRepository productoRepository;
+    
+    // Mantenemos el atributo local para facilitar la lectura y evitar el casting
+    private final ProductoRepository productoRepository; 
 
     public ProductoService(ProductoRepository productoRepository) {
-        // Llama al constructor de BaseService, pasando el repositorio.
+        // Inicializamos el repositorio en el padre (BaseService)
         super(productoRepository);
-        this.productoRepository = productoRepository;
+        // Asignamos el repositorio al atributo local
+        this.productoRepository = productoRepository; 
     }
 
+    // Método para acceder al repositorio si fuera necesario, aunque ya está disponible localmente
     public ProductoRepository getRepository() {
         return productoRepository;
     }
 
     @Override
     public Optional<Producto> buscarPorLlavePrimaria(Long codigoProducto) {
+        // Implementación directa usando el atributo local, sin casting
         return productoRepository.findByCodigoProducto(codigoProducto);
-    }
-
-    public List<Producto> buscarTodos() {
-        return productoRepository.findByActivoTrue();
     }
 }

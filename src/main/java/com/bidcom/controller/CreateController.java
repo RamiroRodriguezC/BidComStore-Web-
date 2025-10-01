@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.bidcom.controller;
 
 import com.bidcom.model.Cliente;
@@ -23,12 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-/**
- *
- * @author Ramiro
- */
 @Controller
 public class CreateController {
 
@@ -54,6 +45,8 @@ public class CreateController {
 
     }
 
+    // --- CRUD DE PRODUCTOS ---
+
     @GetMapping("/admin/productos/nuevo")
     public String mostrarFormularioCrearProducto(Model model) {
         model.addAttribute("producto", new Producto());
@@ -67,7 +60,9 @@ public class CreateController {
         productoService.guardar(producto);
         return "redirect:/admin/productos";
     }
-    
+
+    // --- CRUD DE USUARIOS (ADMIN) ---
+
     @GetMapping("/admin/usuarios/nuevo")
     public String mostrarFormularioCrearUsuario(Model model) {
         model.addAttribute("usuario", new Usuario());
@@ -77,65 +72,72 @@ public class CreateController {
 
     }
 
+    /**
+     * Guarda un nuevo usuario (ADMIN, REPRESENTANTE, o CLIENTE).
+     * Se usa @ModelAttribute para mapear los campos del formulario.
+     */
     @PostMapping("/admin/usuarios/guardar")
     @Transactional
-    public String guardarUsuario(@RequestParam("rol") String rol,
-            /*
-            
-                ¿Puede mejorarse? ¿hacen falta todos los parametros por separado?
-            
-            */
-            @RequestParam("email") String email,
-            @RequestParam("password") String password,
-            @RequestParam(name = "nombre", required = false) String nombre,
-            @RequestParam(name = "apellido", required = false) String apellido,
-            @RequestParam(name = "numeroTelefonico", required = false) String numeroTelefonico)
+    public String guardarUsuario(@ModelAttribute Usuario usuario) 
     {
-         if (rolUsuario.CLIENTE.name().equals(rol)) {
-            Cliente cliente = new Cliente();
-            cliente.setRol(rolUsuario.CLIENTE);
-            cliente.setEmail(email);
-            //Se hashea el password con el passwordEncoder
-            cliente.setPassword(passwordEncoder.encode(password)); // ¡Recuerda encriptar la contraseña!
-            cliente.setNombre(nombre);
-            cliente.setApellido(apellido);
-            cliente.setNumeroTelefonico(numeroTelefonico);
-            clienteService.guardar(cliente); // Asegúrate de que este método exista y funcione
+        // Hashear la contraseña OBLIGATORIAMENTE 
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword())); 
+
+        // Determinar el rol y guardar en el servicio correcto
+        if (rolUsuario.CLIENTE.equals(usuario.getRol())) {
+            // Si el formulario manda un cliente, casteamos a cliente
+
+            // Usamos el constructor sin argumentos
+            Cliente cliente = new Cliente(); 
+
+            // Copiamos los campos de la superclase (Usuario)
+            cliente.setEmail(usuario.getEmail());
+            cliente.setPassword(usuario.getPassword()); //ya esta hasheada desde arriba
+            cliente.setRol(usuario.getRol());
+
+            clienteService.guardar(cliente);
         } else {
-            Usuario usuario = new Usuario();
-            usuario.setRol(rolUsuario.valueOf(rol));
-            usuario.setEmail(email);
-            usuario.setPassword(password); // ¡Recuerda encriptar la contraseña!
+            // Guardar como Usuario (ADMIN o REPRESENTANTE)
             usuarioService.guardar(usuario);
         }
-
-        return "redirect:/admin/usuarios";
+        //volvemos a admin/usuarios, donde podemos ver todos los users incluido el nuevo
+        return "redirect:/admin/usuarios"; 
     }
+
+    // --- CRUD DE CLIENTES (REPRESENTANTE) ---
 
     @GetMapping("/representante/clientes/nuevo")
     public String mostrarFormularioCrearClienteParaRepresentante(Model model) {
         Cliente cliente = new Cliente();
-        cliente.setRol(rolUsuario.CLIENTE); // Establece el rol como "CLIENTE" por defecto
+        cliente.setRol(rolUsuario.CLIENTE); // El Representante solo puede crear Clientes
         model.addAttribute("usuario", cliente);
         model.addAttribute("forzarCliente", true);
         model.addAttribute("formFragment", "create/form-usuario");
         return "create";
     }
 
+    /**
+     * Guarda un Cliente creado por el Representante.
+     * Como desde el panel de representante solo pueden venir clientes.
+     * No hace falta hacer validaciones como en admin
+     */
     @PostMapping("/representante/clientes/guardar")
     public String guardarCliente(@ModelAttribute Cliente cliente) {
+        // Hasheamos la contraseña
+        cliente.setPassword(passwordEncoder.encode(cliente.getPassword()));
         clienteService.guardar(cliente);
         return "redirect:/representante/clientes";
     }
+    
+    // --- CRUD DE PEDIDOS (REPRESENTANTE) ---
 
     @GetMapping("representante/pedidos/nuevo")
     public String mostrarFormularioCrearPedido(Model model) {
         Pedido pedido = new Pedido();
-        // Inicializa la lista de items para evitar NullPointerException en el formulario
         pedido.setItems(List.of(new Item()));
         model.addAttribute("pedido", pedido);
-        model.addAttribute("clientes", clienteService.buscarTodos());
-        model.addAttribute("productos", productoService.buscarTodos());
+        model.addAttribute("clientes", clienteService.buscarTodos()); // para el desplegable de seleccion de clientes
+        model.addAttribute("productos", productoService.buscarTodos()); //para el desplegable de seleccion de productos
         model.addAttribute("formFragment", "create/form-pedido");
         return "create";
     }
@@ -143,23 +145,21 @@ public class CreateController {
     @PostMapping("representante/pedidos/guardar")
     @Transactional
     public String guardarPedido(@ModelAttribute Pedido pedido) {
-        // Establece la fecha y hora de creación
+        // Lógica de validación, fecha, estado y cálculo de ítems. ¡Muy bien!
+        
         pedido.setFechaHoraCreacion(LocalDateTime.now());
-        // Establece el estado inicial
         pedido.setEstado("PENDIENTE");
 
-        // Recorre cada ítem para establecer la referencia al pedido
+        //por cada item que hayamos agregado...
         for (Item item : pedido.getItems()) {
             item.setPedido(pedido);
 
-            // ➡️ Paso 1: Obtén el ID del producto que viene del formulario
             Long codigoProducto = item.getProducto().getCodigoProducto();
 
-            // ➡️ Paso 2: Busca el producto completo en la base de datos usando el ID
             Producto productoCompleto = productoService.buscarPorLlavePrimaria(codigoProducto)
                     .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado: " + codigoProducto));
 
-            // ➡️ Paso 3: Asigna el producto completo y su precio al ítem
+            // Asigna la información completa del producto (precio, etc.)
             item.setProducto(productoCompleto);
             item.setPrecio(productoCompleto.getPrecio());
         }

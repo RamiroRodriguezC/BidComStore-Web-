@@ -1,81 +1,86 @@
 package com.bidcom.service;
-
-import com.bidcom.model.Producto;
 import com.bidcom.model.Usuario;
 import com.bidcom.model.rolUsuario;
 import com.bidcom.repositories.UsuarioRepository;
 import java.util.List;
-import org.springframework.security.core.userdetails.User;
 import java.util.Optional;
-import org.springframework.stereotype.Service;
-import org.springframework.stereotype.Service;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+// Implementa UserDetailsService que lo va a usar SpringSecurity despues
+public class UsuarioService extends BaseService<Usuario, UsuarioRepository> implements UserDetailsService {
 
-public class UsuarioService extends BaseService<Usuario, UsuarioRepository> implements UserDetailsService  {
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository; 
 
     public UsuarioService(UsuarioRepository usuarioRepository) {
-        super(usuarioRepository);
+        super(usuarioRepository); // Llama al constructor del BaseService
         this.usuarioRepository = usuarioRepository;
     }
-    
-    public UsuarioRepository getRepository() {
-        return usuarioRepository;
-    }
 
+    // --- Métodos de Búsqueda  ---
+    //Busca por mail, pero solo devuelve los usuarios si estan activos
     public Optional<Usuario> buscarPorMail(String mail) {
         return usuarioRepository.findByEmailAndActivoTrue(mail);
     }
     
+    //Busca por rol, pero solo devuelve los usuarios si estan activos
     public List<Usuario> buscarPorRol(rolUsuario rol) {
         return usuarioRepository.findByRolAndActivoTrue(rol);
     }
     
-    // Editar: se hace recuperando primero el objeto
+    // --- Lógica CRUD ---
+
+    /**
+     * Edita el email y rol de un usuario existente.
+     * @param id userid
+     * @param usuarioActualizado
+     * @return 
+     */
     public Usuario editar(Long id, Usuario usuarioActualizado) {
-        Usuario usuario = usuarioRepository.findById(id)
+        Usuario usuario = usuarioRepository.findById(id) 
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         usuario.setEmail(usuarioActualizado.getEmail());
         usuario.setRol(usuarioActualizado.getRol());
-        usuario.setPassword(usuarioActualizado.getPassword());
+        
+        // No manejamos la contraseña aquí por seguridad.
 
         return usuarioRepository.save(usuario);
     }
     
+    // --- Métodos de UserDetailsService (Spring Security) ---
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Usuario usuario = usuarioRepository.findByEmailAndActivoTrue(email)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+        Usuario usuario = buscarPorMail(email) 
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado o inactivo"));
 
         return User.builder()
-                .username(usuario.getEmail()) // lo que el usuario escribe en login
-                .password(usuario.getPassword()) // hash de la BD
-                .roles(usuario.getRol().toString()) // CLIENTE, ADMIN, REPRESENTANTE
+                .username(usuario.getEmail()) 
+                .password(usuario.getPassword()) 
+                .roles(usuario.getRol().toString()) 
                 .build();
     }
 
+    // --- Implementación de BaseService (Método abstracto) ---
     @Override
     public Optional<Usuario> buscarPorLlavePrimaria(Long userid) {
         return usuarioRepository.findByUserid(userid);
     }
-
-    public List<Usuario> buscarTodos() {
-        return usuarioRepository.findByActivoTrue();
-    }
     
+    // --- Lógica del Wizzard / Pantalla de registro del primer user ---
+
+    /**
+     * Verifica si la tabla de usuarios está vacía. Usado por el SetupController.
+     */
     public boolean isEmpty() {
-        usuarioRepository.flush();
-        System.out.println("\n\n\n\n\n\n usuarios q cuento: "+ usuarioRepository.count() + "\n\n\n\n\n\n");
+        // Limpiamos el debugging y usamos el método de conteo.
         return usuarioRepository.count() == 0;
     }
-    // Crear o actualizar (Spring maneja ambos con save)
-
+    
+    // El método guardar(T entidad) y buscarTodos() se heredan del BaseService
 }

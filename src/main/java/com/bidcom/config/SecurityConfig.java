@@ -3,7 +3,6 @@ package com.bidcom.config;
 import com.bidcom.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,45 +21,51 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests()
-                //Permitir el acceso publico a los recursos estaticos
-                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll() // el resto pide login
-
-                //Definir los endpoints publicos
+        // 1. Configurar reglas de autorización (quién puede acceder a qué rutas)
+        http.authorizeHttpRequests()
+                // Permitir acceso público a recursos estáticos
+                .requestMatchers("/css/**", "/js/**", "/img/**").permitAll()
+                // Permitir acceso público a páginas públicas
                 .requestMatchers("/", "/index", "/login", "/setup/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/clientes/**").hasRole("CLIENTE")
-                .requestMatchers(HttpMethod.POST, "/representante/**").hasRole("REPRESENTANTE_VENTAS")
-                .requestMatchers(HttpMethod.POST,"/admin/**").hasRole("ADMINISTRADOR")
-                // el /** significa que pueden entrar a todas las subrutas de x/**
-                // osea, si tengo admin/** puedo entrar a admin/a y admin/b por igual
+                // Rutas protegidas según rol
+                .requestMatchers("/clientes/**").hasRole("CLIENTE")
+                .requestMatchers("/representante/**").hasRole("REPRESENTANTE_VENTAS")
+                .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
+                // Cualquier otra petición requiere autenticación
                 .anyRequest().authenticated()
-                .and()
-                //Definir la pagina de login / inicio de sesion
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("username") // el formulario realmente usa la columna "email"
-                .passwordParameter("password")
-                
+            .and()
+
+            // 2. Configurar login por formulario
+            .formLogin()
+                .loginPage("/login") // Página de login personalizada
+                .usernameParameter("username") // Nombre del parámetro usuario en el formulario
+                .passwordParameter("password") // Nombre del parámetro contraseña
+                // Handler para redirigir según rol después del login exitoso
                 .successHandler((request, response, authentication) -> {
                     String role = authentication.getAuthorities().iterator().next().getAuthority();
-                    //en caso de que el usuario y contraseña hayan coincidido (succesHandler)
+                    //en caso de que el usuario y contraseña hayan coincidido (succesHandler o redireccion inteligente)
                     //se redirige al usuario segun su rol a la pagina correspondiente
-                    
-                    if (role.equals("ROLE_ADMINISTRADOR")) { //Hibernate le agrega el prefijo ROLE_
-                        response.sendRedirect("/admin/usuarios");
-                    } else if (role.equals("ROLE_REPRESENTANTE_VENTAS")) { //Hibernate le agrega el prefijo ROLE_
-                        System.out.println("ROL = " + role);
-                        response.sendRedirect("/representante/clientes");
-                    } else {
-                        System.out.println(role.toString());
-                        response.sendRedirect("/cliente/mispedidos");
+                    switch (role) {
+                        case "ROLE_ADMINISTRADOR":
+                            response.sendRedirect("/admin/usuarios");
+                            break;
+                        case "ROLE_REPRESENTANTE_VENTAS":
+                            response.sendRedirect("/representante/clientes");
+                            break;
+                        case "ROLE_CLIENTE":
+                            response.sendRedirect("/cliente/mispedidos");
+                            break;
+                        default:
+                            response.sendRedirect("/login?error");
+                            break;
                     }
                 })
                 .permitAll()
-                .and()
-                //Definir la pagina de logout / salida
-                .logout(logout -> logout.permitAll());
+            .and()
+
+            // 3. Configurar logout y permitir acceso a todos para cerrar sesión
+            .logout()
+                .permitAll();
 
         return http.build();
     }

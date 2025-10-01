@@ -1,36 +1,30 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.bidcom.service;
 
 import com.bidcom.model.Cliente;
 import com.bidcom.repositories.ClienteRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Optional; // Importación necesaria para buscarPorLlavePrimaria
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author Ramiro
- */
 @Service
-public class ClienteService {
+// ¡IMPORTANTE! Extendemos de BaseService para heredar las funcionalidades genéricas
+public class ClienteService extends BaseService<Cliente, ClienteRepository> { 
+    
+    // Mantenemos el atributo local para facilidad de acceso y evitar casting
     private final ClienteRepository clienteRepository;
 
     public ClienteService(ClienteRepository clienteRepository) {
+        // Llamada al constructor del padre para inicializar 'repository'
+        super(clienteRepository); 
         this.clienteRepository = clienteRepository;
     }
 
-    @Transactional // Asegura que la operación sea atómica, que se haga toda junta, si por algun motivo
-                   //algo no se hace, entonces se baja toda la operacion.
-                   //o todo se realiza con exito o no se realiza nada.
-    public void guardar(Cliente cliente) {
-        clienteRepository.save(cliente);
-    }
+    // --- Implementación de BaseService (Método abstracto) ---
     
-    
-    public List<Cliente> buscarTodos() {
-        return clienteRepository.findByActivoTrue();
+    @Override
+    public Optional<Cliente> buscarPorLlavePrimaria(Long userid) {
+        // Asumiendo que el ID del cliente se mapea al campo userid
+        return clienteRepository.findByUserid(userid); 
     }
 }

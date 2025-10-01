@@ -1,8 +1,3 @@
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.bidcom.service;
 import com.bidcom.model.Desactivable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,7 +12,7 @@ import java.util.List;
  * @param <R> Repositorio (correspondiente al modelo)
  */
 
-
+//NOTA: T = Type (tipo), es convencion nombrarlo asi, en este caso es la entidad JPA
 public abstract class BaseService<T extends Desactivable, R extends JpaRepository<T, Long>> {
 
     private final R repository;
@@ -38,7 +33,11 @@ public abstract class BaseService<T extends Desactivable, R extends JpaRepositor
         }
     }
     
-    // Método genérico para guardar que puedes reutilizar
+    // Métodos comunes de CRUD que usan el repositorio
+    public List<T> buscarTodos() {
+        return repository.findAll();
+    }
+    
     public T guardar(T entidad) {
         return repository.save(entidad);
     }

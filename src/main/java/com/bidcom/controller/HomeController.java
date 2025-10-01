@@ -5,17 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author Ramiro
- */
-
-
 @Controller
 public class HomeController {
 
@@ -25,11 +14,20 @@ public class HomeController {
         this.usuarioService = usuarioService;
     }
 
+    /**
+     * Maneja la ruta de inicio. 
+     * Determina si la aplicación ya fue inicializada.
+     */
     @GetMapping({"/", "/index"})
     public String index(Model model) {
-        boolean hayUsuarios = !usuarioService.isEmpty();
-        System.out.println(usuarioService.buscarTodos());
+        // Usa la bandera para indicar si el wizzard de setup es necesario
+        boolean hayUsuarios = !usuarioService.isEmpty(); 
+        
+        /*este atributo que le pasamos a la vista sirve para que cambie el 
+        nombre del boton, despues se redirecciona en setup */
         model.addAttribute("hayUsuarios", hayUsuarios);
-        return "index"; // Thymeleaf
+        
+        // Retorna la vista index.html
+        return "index"; 
     }
 }
