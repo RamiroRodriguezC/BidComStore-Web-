@@ -28,7 +28,7 @@ El sistema sigue el patrón **MVC (Modelo-Vista-Controlador)** con una estricta 
 * **Herencia de Entidades:** Uso de herencia de JPA (`Usuario` como clase base para `Cliente`) para modelar correctamente la estructura de usuarios.
 
 ### 2.2 Estructura de directorios clave
-´´´text
+```text
 bidcom-ecommerce/
 ├── src/
 │   ├── main/
@@ -58,7 +58,7 @@ bidcom-ecommerce/
 ├── pom.xml                       # Dependencias y configuración de Maven
 ├── .gitignore
 └── README.md
-´´´
+```
 
 ## 3. Gestión de Seguridad y Roles
 
