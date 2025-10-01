@@ -27,7 +27,7 @@ El sistema sigue el patrón **MVC (Modelo-Vista-Controlador)** con una estricta 
 * **Soft Delete (`activo`):** Implementación de **borrado lógico** en entidades clave (`Usuario`, `Producto`, `Pedido`). Esto asegura la **integridad de los datos** y permite la auditoría.
 * **Herencia de Entidades:** Uso de herencia de JPA (`Usuario` como clase base para `Cliente`) para modelar correctamente la estructura de usuarios.
 
-## 🔒 3. Gestión de Seguridad y Roles
+## 3. Gestión de Seguridad y Roles
 
 La seguridad es gestionada por **Spring Security**, controlando el acceso a recursos mediante una estructura de roles bien definida.
 
@@ -46,7 +46,7 @@ La seguridad es gestionada por **Spring Security**, controlando el acceso a recu
 
 ---
 
-## 🚀 4. Puesta en Marcha (Instrucciones)
+## 4. Puesta en Marcha (Instrucciones)
 
 Sigue estos pasos para correr la aplicación localmente:
 
